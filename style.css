@@ -173,7 +173,7 @@ body {
 
 
 /* =========================================
-   3D BROTHER + SISTER CHARACTERS
+   BROTHER + SISTER CHARACTERS
 ========================================= */
 
 .character-stage {
@@ -213,12 +213,23 @@ body {
     );
 
   transition:
-    transform 0.4s ease,
-    filter 0.4s ease;
+    transform 0.35s ease,
+    filter 0.35s ease;
+
+  /*
+    IMPORTANT:
+    Default idle animation.
+    Reaction classes below override this.
+  */
+
+  animation:
+    characterIdle 3s ease-in-out infinite;
 }
 
 
-/* Actual PNG image */
+/* =========================================
+   CHARACTER IMAGE
+========================================= */
 
 .character img {
   width: 100%;
@@ -229,20 +240,29 @@ body {
 
   user-select: none;
 
+  /*
+    Smooth image reaction change
+  */
+
   transition:
-    transform 0.35s ease,
-    filter 0.35s ease;
+    transform 0.25s ease,
+    filter 0.25s ease,
+    opacity 0.2s ease;
 }
 
 
-/* Brother position */
+/* =========================================
+   BROTHER POSITION
+========================================= */
 
 .character.brother {
   left: max(2%, calc(50% - 620px));
 }
 
 
-/* Sister position */
+/* =========================================
+   SISTER POSITION
+========================================= */
 
 .character.sister {
   right: max(2%, calc(50% - 620px));
@@ -250,68 +270,32 @@ body {
 
 
 /* =========================================
-   CHARACTER SPEECH / ACTION BUBBLE
+   CHARACTER IDLE
 ========================================= */
 
-.character-action {
-  position: absolute;
+@keyframes characterIdle {
 
-  top: -35px;
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      rotate(0deg);
+  }
 
-  padding: 7px 13px;
+  50% {
+    transform:
+      translateY(-10px)
+      rotate(1deg);
+  }
 
-  border-radius: 18px;
-
-  background: rgba(255, 255, 255, 0.95);
-
-  box-shadow:
-    0 8px 20px
-    rgba(90, 60, 100, 0.16);
-
-  font-size: 1.05rem;
-
-  font-weight: 800;
-
-  color: #6b4d78;
-
-  white-space: nowrap;
-
-  opacity: 1;
-
-  z-index: 5;
-
-  transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
 }
 
 
-/* Little bubble arrow */
+/* =========================================
+   CHARACTER LABEL
+========================================= */
 
-.character-action::after {
-  content: "";
-
-  position: absolute;
-
-  bottom: -7px;
-  left: 50%;
-
-  width: 14px;
-  height: 14px;
-
-  background: white;
-
-  transform:
-    translateX(-50%)
-    rotate(45deg);
-
-  z-index: -1;
-}
-
-
-/* Character name */
-
-.character-name {
+.character-label {
   margin-top: -10px;
 
   padding: 5px 14px;
@@ -338,26 +322,134 @@ body {
 
 
 /* =========================================
-   CHARACTER GENERAL ANIMATION
+   SPEECH BUBBLE
 ========================================= */
 
-.character {
+.speech-bubble {
+  position: absolute;
+
+  bottom: calc(100% + 15px);
+
+  left: 50%;
+
+  transform:
+    translateX(-50%);
+
+  min-width: 180px;
+
+  max-width: 240px;
+
+  padding: 10px 15px;
+
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  box-shadow:
+    0 8px 25px
+    rgba(90, 60, 100, 0.15);
+
+  font-size: 0.9rem;
+
+  font-weight: 800;
+
+  color: #6b4d78;
+
+  text-align: center;
+
+  z-index: 20;
+
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+
+/* Bubble tail */
+
+.speech-bubble::after {
+
+  content: "";
+
+  position: absolute;
+
+  bottom: -8px;
+
+  left: 50%;
+
+  width: 16px;
+
+  height: 16px;
+
+  background: white;
+
+  transform:
+    translateX(-50%)
+    rotate(45deg);
+
+  z-index: -1;
+}
+
+
+/* =========================================
+   NORMAL STATES
+========================================= */
+
+.character.brother.normal {
   animation:
     characterIdle 3s ease-in-out infinite;
 }
 
-@keyframes characterIdle {
+.character.sister.normal {
+  animation:
+    characterIdle 3.2s ease-in-out infinite;
+}
+
+
+/* =========================================
+   BROTHER THINKING 🤔
+========================================= */
+
+.character.brother.thinking {
+  animation:
+    thinkingBrother 1.5s ease-in-out infinite !important;
+}
+
+
+.character.brother.thinking img {
+
+  filter:
+    drop-shadow(
+      0 8px 12px
+      rgba(100, 70, 150, 0.15)
+    );
+}
+
+
+@keyframes thinkingBrother {
 
   0%,
   100% {
     transform:
       translateY(0)
-      rotate(0deg);
+      rotate(-3deg);
+  }
+
+  25% {
+    transform:
+      translateY(-5px)
+      rotate(2deg);
   }
 
   50% {
     transform:
-      translateY(-10px)
+      translateY(-12px)
+      rotate(4deg);
+  }
+
+  75% {
+    transform:
+      translateY(-5px)
       rotate(1deg);
   }
 
@@ -365,15 +457,431 @@ body {
 
 
 /* =========================================
-   HOME SCREEN CHARACTERS
+   SISTER JUDGING 👀
+========================================= */
+
+.character.sister.judging {
+  animation:
+    judgingSister 1.7s ease-in-out infinite !important;
+}
+
+
+@keyframes judgingSister {
+
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      rotate(3deg);
+  }
+
+  30% {
+    transform:
+      translateY(-5px)
+      rotate(-3deg);
+  }
+
+  50% {
+    transform:
+      translateY(-10px)
+      rotate(-5deg);
+  }
+
+  70% {
+    transform:
+      translateY(-5px)
+      rotate(-2deg);
+  }
+
+}
+
+
+/* =========================================
+   BROTHER SCARED 😨
+========================================= */
+
+.character.brother.scared {
+
+  animation:
+    scaredBrother 0.25s ease-in-out infinite !important;
+
+  filter:
+    drop-shadow(
+      0 15px 20px
+      rgba(70, 40, 100, 0.18)
+    );
+}
+
+
+.character.brother.scared img {
+
+  transform:
+    scale(1.04);
+}
+
+
+@keyframes scaredBrother {
+
+  0% {
+    transform:
+      translateX(0)
+      translateY(0)
+      rotate(0deg);
+  }
+
+  20% {
+    transform:
+      translateX(-9px)
+      translateY(2px)
+      rotate(-4deg);
+  }
+
+  40% {
+    transform:
+      translateX(9px)
+      translateY(-2px)
+      rotate(4deg);
+  }
+
+  60% {
+    transform:
+      translateX(-7px)
+      translateY(2px)
+      rotate(-3deg);
+  }
+
+  80% {
+    transform:
+      translateX(7px)
+      translateY(0)
+      rotate(3deg);
+  }
+
+  100% {
+    transform:
+      translateX(0)
+      translateY(0)
+      rotate(0deg);
+  }
+
+}
+
+
+/* =========================================
+   SISTER ANGRY 😡
+========================================= */
+
+.character.sister.angry {
+
+  animation:
+    angrySister 0.28s ease-in-out infinite !important;
+
+  filter:
+    drop-shadow(
+      0 15px 22px
+      rgba(150, 50, 80, 0.25)
+    );
+}
+
+
+.character.sister.angry img {
+
+  transform:
+    scale(1.05);
+}
+
+
+@keyframes angrySister {
+
+  0%,
+  100% {
+    transform:
+      translateX(0)
+      rotate(0deg);
+  }
+
+  20% {
+    transform:
+      translateX(-10px)
+      rotate(-5deg);
+  }
+
+  40% {
+    transform:
+      translateX(10px)
+      rotate(5deg);
+  }
+
+  60% {
+    transform:
+      translateX(-8px)
+      rotate(-4deg);
+  }
+
+  80% {
+    transform:
+      translateX(8px)
+      rotate(4deg);
+  }
+
+}
+
+
+/* =========================================
+   BROTHER CRYING 😭
+========================================= */
+
+.character.brother.crying {
+
+  animation:
+    cryingBrother 0.9s ease-in-out infinite !important;
+}
+
+
+@keyframes cryingBrother {
+
+  0%,
+  100% {
+    transform:
+      translateY(5px)
+      rotate(3deg);
+  }
+
+  50% {
+    transform:
+      translateY(18px)
+      rotate(-3deg);
+  }
+
+}
+
+
+/* =========================================
+   BROTHER RUNNING 🏃
+========================================= */
+
+.character.brother.running {
+
+  animation:
+    runningBrother 0.5s ease-in-out infinite !important;
+}
+
+
+@keyframes runningBrother {
+
+  0%,
+  100% {
+    transform:
+      translateX(0)
+      translateY(0)
+      rotate(-5deg);
+  }
+
+  25% {
+    transform:
+      translateX(8px)
+      translateY(-5px)
+      rotate(4deg);
+  }
+
+  50% {
+    transform:
+      translateX(18px)
+      translateY(-10px)
+      rotate(6deg);
+  }
+
+  75% {
+    transform:
+      translateX(8px)
+      translateY(-5px)
+      rotate(-2deg);
+  }
+
+}
+
+
+/* =========================================
+   BROTHER HAPPY 😎
+========================================= */
+
+.character.brother.happy {
+
+  animation:
+    happyBrother 0.65s ease-in-out infinite !important;
+
+  filter:
+    drop-shadow(
+      0 15px 25px
+      rgba(255, 180, 70, 0.2)
+    );
+}
+
+
+@keyframes happyBrother {
+
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      rotate(6deg)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(-22px)
+      rotate(-6deg)
+      scale(1.04);
+  }
+
+}
+
+
+/* =========================================
+   SISTER HAPPY ❤️
+========================================= */
+
+.character.sister.happy {
+
+  animation:
+    happySister 0.7s ease-in-out infinite !important;
+
+  filter:
+    drop-shadow(
+      0 15px 25px
+      rgba(255, 130, 170, 0.22)
+    );
+}
+
+
+@keyframes happySister {
+
+  0%,
+  100% {
+    transform:
+      translateY(0)
+      rotate(-6deg)
+      scale(1);
+  }
+
+  50% {
+    transform:
+      translateY(-22px)
+      rotate(6deg)
+      scale(1.04);
+  }
+
+}
+
+
+/* =========================================
+   SISTER ATTACK 😈
+========================================= */
+
+.character.sister.attack {
+
+  animation:
+    attackSister 0.3s ease-in-out infinite !important;
+
+  filter:
+    drop-shadow(
+      0 15px 25px
+      rgba(180, 40, 80, 0.28)
+    );
+}
+
+
+.character.sister.attack img {
+
+  transform:
+    scale(1.08);
+}
+
+
+@keyframes attackSister {
+
+  0% {
+    transform:
+      translateX(0)
+      rotate(0deg)
+      scale(1);
+  }
+
+  25% {
+    transform:
+      translateX(-12px)
+      rotate(-7deg)
+      scale(1.02);
+  }
+
+  50% {
+    transform:
+      translateX(14px)
+      rotate(7deg)
+      scale(1.06);
+  }
+
+  75% {
+    transform:
+      translateX(-10px)
+      rotate(-5deg)
+      scale(1.02);
+  }
+
+  100% {
+    transform:
+      translateX(0)
+      rotate(0deg)
+      scale(1);
+  }
+
+}
+
+
+/* =========================================
+   CHARACTER REACTION POP
+========================================= */
+
+.character.reaction-pop img {
+
+  animation:
+    reactionPop 0.4s ease;
+}
+
+
+@keyframes reactionPop {
+
+  0% {
+    transform:
+      scale(0.9);
+  }
+
+  50% {
+    transform:
+      scale(1.12);
+  }
+
+  100% {
+    transform:
+      scale(1);
+  }
+
+}
+
+
+/* =========================================
+   HOME CHARACTER ANIMATION
 ========================================= */
 
 .home-characters .brother {
+
   animation:
     brotherWave 2.2s ease-in-out infinite;
 }
 
 .home-characters .sister {
+
   animation:
     sisterWave 2.5s ease-in-out infinite;
 }
@@ -410,464 +918,6 @@ body {
     transform:
       translateY(-14px)
       rotate(-3deg);
-  }
-
-}
-
-
-/* =========================================
-   LEVEL 1
-   BROTHER THINKING
-   SISTER JUDGING
-========================================= */
-
-.level1-characters .brother {
-  animation:
-    thinkingBrother 2s ease-in-out infinite;
-}
-
-.level1-characters .sister {
-  animation:
-    judgingSister 2.3s ease-in-out infinite;
-}
-
-
-@keyframes thinkingBrother {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(-3deg);
-  }
-
-  50% {
-    transform:
-      translateY(-10px)
-      rotate(4deg);
-  }
-
-}
-
-
-@keyframes judgingSister {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(3deg);
-  }
-
-  50% {
-    transform:
-      translateY(-8px)
-      rotate(-4deg);
-  }
-
-}
-
-
-/* =========================================
-   LEVEL 2
-   RUNNING + CHEERING
-========================================= */
-
-.level2-characters .brother {
-  animation:
-    runningBrother 0.8s ease-in-out infinite;
-}
-
-.level2-characters .sister {
-  animation:
-    cheeringSister 1.2s ease-in-out infinite;
-}
-
-
-@keyframes runningBrother {
-
-  0%,
-  100% {
-    transform:
-      translateX(0)
-      translateY(0)
-      rotate(-5deg);
-  }
-
-  50% {
-    transform:
-      translateX(18px)
-      translateY(-8px)
-      rotate(6deg);
-  }
-
-}
-
-
-@keyframes cheeringSister {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(-3deg);
-  }
-
-  50% {
-    transform:
-      translateY(-18px)
-      rotate(4deg);
-  }
-
-}
-
-
-/* =========================================
-   LEVEL 3
-   CHASING / TEASING
-========================================= */
-
-.level3-characters .brother {
-  animation:
-    chasingBrother 1s ease-in-out infinite;
-}
-
-.level3-characters .sister {
-  animation:
-    teasingSister 1.6s ease-in-out infinite;
-}
-
-
-@keyframes chasingBrother {
-
-  0%,
-  100% {
-    transform:
-      translateX(0)
-      rotate(-5deg);
-  }
-
-  50% {
-    transform:
-      translateX(25px)
-      translateY(-8px)
-      rotate(7deg);
-  }
-
-}
-
-
-@keyframes teasingSister {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(4deg);
-  }
-
-  50% {
-    transform:
-      translateY(-12px)
-      rotate(-5deg);
-  }
-
-}
-
-
-/* =========================================
-   LEVEL 4
-   BROTHER PROTECTING WALLET
-   SISTER WAITING FOR MONEY
-========================================= */
-
-.level4-characters .brother {
-  animation:
-    protectMoney 1.5s ease-in-out infinite;
-}
-
-.level4-characters .sister {
-  animation:
-    waitingSister 2s ease-in-out infinite;
-}
-
-
-@keyframes protectMoney {
-
-  0%,
-  100% {
-    transform:
-      translateX(0)
-      rotate(-4deg);
-  }
-
-  50% {
-    transform:
-      translateX(-15px)
-      rotate(4deg);
-  }
-
-}
-
-
-@keyframes waitingSister {
-
-  0%,
-  100% {
-    transform:
-      translateY(0);
-  }
-
-  50% {
-    transform:
-      translateY(-10px);
-  }
-
-}
-
-
-/* =========================================
-   LEVEL 5
-   CONFUSED / EXCITED
-========================================= */
-
-.level5-characters .brother {
-  animation:
-    confusedBrother 1.4s ease-in-out infinite;
-}
-
-.level5-characters .sister {
-  animation:
-    choosingSister 1.6s ease-in-out infinite;
-}
-
-
-@keyframes confusedBrother {
-
-  0%,
-  100% {
-    transform:
-      rotate(-5deg)
-      translateY(0);
-  }
-
-  25% {
-    transform:
-      rotate(5deg)
-      translateY(-7px);
-  }
-
-  75% {
-    transform:
-      rotate(-6deg)
-      translateY(-4px);
-  }
-
-}
-
-
-@keyframes choosingSister {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(3deg);
-  }
-
-  50% {
-    transform:
-      translateY(-14px)
-      rotate(-4deg);
-  }
-
-}
-
-
-/* =========================================
-   FINAL CELEBRATION
-========================================= */
-
-.final-characters .brother {
-  animation:
-    celebrateBrother 0.8s ease-in-out infinite;
-}
-
-.final-characters .sister {
-  animation:
-    celebrateSister 0.9s ease-in-out infinite;
-}
-
-
-@keyframes celebrateBrother {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(-7deg);
-  }
-
-  50% {
-    transform:
-      translateY(-25px)
-      rotate(7deg);
-  }
-
-}
-
-
-@keyframes celebrateSister {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(7deg);
-  }
-
-  50% {
-    transform:
-      translateY(-25px)
-      rotate(-7deg);
-  }
-
-}
-
-
-/* =========================================
-   CHARACTER REACTIONS
-   THESE CLASSES CAN BE ADDED WITH JS
-========================================= */
-
-
-/* Sister angry */
-
-.character.sister.angry {
-  animation:
-    angrySister 0.35s ease-in-out infinite !important;
-}
-
-
-@keyframes angrySister {
-
-  0%,
-  100% {
-    transform:
-      translateX(-8px)
-      rotate(-4deg);
-  }
-
-  50% {
-    transform:
-      translateX(8px)
-      rotate(4deg);
-  }
-
-}
-
-
-/* Brother sad */
-
-.character.brother.sad {
-  animation:
-    sadBrother 1s ease-in-out infinite !important;
-}
-
-
-@keyframes sadBrother {
-
-  0%,
-  100% {
-    transform:
-      translateY(5px)
-      rotate(3deg);
-  }
-
-  50% {
-    transform:
-      translateY(18px)
-      rotate(-3deg);
-  }
-
-}
-
-
-/* Sister happy */
-
-.character.sister.happy {
-  animation:
-    happySister 0.7s ease-in-out infinite !important;
-}
-
-
-@keyframes happySister {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(-6deg);
-  }
-
-  50% {
-    transform:
-      translateY(-22px)
-      rotate(6deg);
-  }
-
-}
-
-
-/* Brother happy */
-
-.character.brother.happy {
-  animation:
-    happyBrother 0.7s ease-in-out infinite !important;
-}
-
-
-@keyframes happyBrother {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(6deg);
-  }
-
-  50% {
-    transform:
-      translateY(-22px)
-      rotate(-6deg);
-  }
-
-}
-
-
-/* Celebration */
-
-.character.celebrate {
-  animation:
-    characterCelebrate 0.55s ease-in-out infinite !important;
-}
-
-
-@keyframes characterCelebrate {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(-8deg)
-      scale(1);
-  }
-
-  50% {
-    transform:
-      translateY(-25px)
-      rotate(8deg)
-      scale(1.06);
   }
 
 }
@@ -1843,22 +1893,20 @@ button {
     right: 4%;
   }
 
-  .character-action {
+  .speech-bubble {
 
-    top: -10px;
+    bottom: calc(100% + 5px);
 
-    font-size: 0.72rem;
+    min-width: 120px;
 
-    padding: 5px 8px;
+    max-width: 150px;
 
-    max-width: 120px;
+    font-size: 0.68rem;
 
-    white-space: normal;
-
-    text-align: center;
+    padding: 6px 8px;
   }
 
-  .character-name {
+  .character-label {
 
     font-size: 0.65rem;
 
@@ -1923,11 +1971,11 @@ button {
     width: 90px;
   }
 
-  .character-action {
+  .speech-bubble {
     display: none;
   }
 
-  .character-name {
+  .character-label {
     display: none;
   }
 
@@ -1958,6 +2006,29 @@ button {
 
   .screen {
     padding-top: 95px;
+  }
+
+}
+
+
+/* =========================================
+   ACCESSIBILITY / REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+
+    animation-duration: 0.01ms !important;
+
+    animation-iteration-count: 1 !important;
+
+    scroll-behavior: auto !important;
+
+    transition-duration: 0.01ms !important;
+
   }
 
 }
