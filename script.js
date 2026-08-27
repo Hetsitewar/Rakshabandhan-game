@@ -1,5 +1,6 @@
 // ========================================
 // BROTHER SURVIVAL CHALLENGE 🎮😂
+// LIVE CHARACTER REACTION SYSTEM
 // ========================================
 
 
@@ -13,6 +14,12 @@ const brotherCharacter =
 const sisterCharacter =
   document.getElementById("sister-character");
 
+const brotherImage =
+  document.getElementById("brother-image");
+
+const sisterImage =
+  document.getElementById("sister-image");
+
 const brotherBubble =
   document.getElementById("brother-bubble");
 
@@ -20,9 +27,133 @@ const sisterBubble =
   document.getElementById("sister-bubble");
 
 
-// ----------------------------------------
+// ========================================
+// CHARACTER IMAGE FILES
+// ========================================
+
+const brotherImages = {
+
+  normal: "images/brother-normal.png",
+
+  thinking: "images/brother-thinking.png",
+
+  scared: "images/brother-scared.png",
+
+  crying: "images/brother-crying.png",
+
+  running: "images/brother-running.png",
+
+  happy: "images/brother-happy.png"
+
+};
+
+
+const sisterImages = {
+
+  normal: "images/sister-normal.png",
+
+  happy: "images/sister-happy.png",
+
+  angry: "images/sister-angry.png",
+
+  judging: "images/sister-judging.png",
+
+  attack: "images/sister-attack.png"
+
+};
+
+
+// ========================================
+// PRELOAD ALL CHARACTER IMAGES
+// ========================================
+
+function preloadCharacterImages() {
+
+  Object.values(brotherImages).forEach((src) => {
+
+    const img = new Image();
+
+    img.src = src;
+
+  });
+
+
+  Object.values(sisterImages).forEach((src) => {
+
+    const img = new Image();
+
+    img.src = src;
+
+  });
+
+}
+
+preloadCharacterImages();
+
+
+// ========================================
+// GET SAFE IMAGE
+// ========================================
+
+function getBrotherImage(action) {
+
+  // Existing game actions mapped to your real images
+
+  const actionMap = {
+
+    celebrate: "happy",
+
+    cheering: "happy",
+
+    wallet: "normal",
+
+    waiting: "normal"
+
+  };
+
+
+  const finalAction =
+    actionMap[action] || action;
+
+
+  return (
+    brotherImages[finalAction] ||
+    brotherImages.normal
+  );
+
+}
+
+
+function getSisterImage(action) {
+
+  // Existing game actions mapped to your real images
+
+  const actionMap = {
+
+    celebrate: "happy",
+
+    cheering: "happy",
+
+    waiting: "judging"
+
+  };
+
+
+  const finalAction =
+    actionMap[action] || action;
+
+
+  return (
+    sisterImages[finalAction] ||
+    sisterImages.normal
+  );
+
+}
+
+
+// ========================================
 // RESET CHARACTER STATES
-// ----------------------------------------
+// ========================================
 
 function resetCharacters() {
 
@@ -35,9 +166,9 @@ function resetCharacters() {
 }
 
 
-// ----------------------------------------
+// ========================================
 // CHANGE CHARACTER ACTION
-// ----------------------------------------
+// ========================================
 
 function setCharacters(
   brotherAction,
@@ -46,7 +177,13 @@ function setCharacters(
   sisterText
 ) {
 
+  // Reset CSS states
   resetCharacters();
+
+
+  // ======================================
+  // BROTHER
+  // ======================================
 
   if (brotherAction) {
 
@@ -56,6 +193,11 @@ function setCharacters(
 
   }
 
+
+  // ======================================
+  // SISTER
+  // ======================================
+
   if (sisterAction) {
 
     sisterCharacter.classList.add(
@@ -64,6 +206,41 @@ function setCharacters(
 
   }
 
+
+  // ======================================
+  // CHANGE BROTHER IMAGE LIVE
+  // ======================================
+
+  if (brotherImage) {
+
+    brotherImage.src =
+      getBrotherImage(brotherAction);
+
+    brotherImage.dataset.reaction =
+      brotherAction || "normal";
+
+  }
+
+
+  // ======================================
+  // CHANGE SISTER IMAGE LIVE
+  // ======================================
+
+  if (sisterImage) {
+
+    sisterImage.src =
+      getSisterImage(sisterAction);
+
+    sisterImage.dataset.reaction =
+      sisterAction || "normal";
+
+  }
+
+
+  // ======================================
+  // SPEECH BUBBLES
+  // ======================================
+
   if (brotherText) {
 
     brotherBubble.innerText =
@@ -71,12 +248,62 @@ function setCharacters(
 
   }
 
+
   if (sisterText) {
 
     sisterBubble.innerText =
       sisterText;
 
   }
+
+}
+
+
+// ========================================
+// SPECIAL REACTION HELPERS
+// ========================================
+
+function wrongReaction(
+  brotherText = "OH NO! 😨",
+  sisterText = "SERIOUSLY BRO?! 😡"
+) {
+
+  setCharacters(
+    "scared",
+    "angry",
+    brotherText,
+    sisterText
+  );
+
+}
+
+
+function correctReaction(
+  brotherText = "YES! 😎🎉",
+  sisterText = "Good job, brother! 👑❤️"
+) {
+
+  setCharacters(
+    "happy",
+    "happy",
+    brotherText,
+    sisterText
+  );
+
+}
+
+
+function thinkingReaction(
+  brotherText = "Hmm... think carefully 🤔",
+  sisterText = "I am watching you 👀"
+) {
+
+  setCharacters(
+    "thinking",
+    "judging",
+    brotherText,
+    sisterText
+  );
 
 }
 
@@ -90,25 +317,33 @@ function showScreen(screenId) {
   const screens =
     document.querySelectorAll(".screen");
 
+
   screens.forEach((screen) => {
 
     screen.classList.remove("active");
 
   });
 
+
   const nextScreen =
     document.getElementById(screenId);
+
+
+  if (!nextScreen) return;
+
 
   nextScreen.classList.add("active");
 
 
+  // ======================================
   // CHARACTER ACTIONS PER SCREEN
+  // ======================================
 
   if (screenId === "start-screen") {
 
     setCharacters(
-      "",
-      "",
+      "normal",
+      "normal",
       "Ready for the challenge? 😎",
       "Let's see if you survive 😈"
     );
@@ -118,9 +353,7 @@ function showScreen(screenId) {
 
   if (screenId === "level1") {
 
-    setCharacters(
-      "thinking",
-      "judging",
+    thinkingReaction(
       "Hmm... think carefully 🤔",
       "I am watching you 👀"
     );
@@ -132,7 +365,7 @@ function showScreen(screenId) {
 
     setCharacters(
       "running",
-      "cheering",
+      "happy",
       "I have to catch it! 🏃",
       "Faster brother! 😂"
     );
@@ -145,7 +378,7 @@ function showScreen(screenId) {
     setCharacters(
       "thinking",
       "judging",
-      "Why is this button running?! 😭",
+      "Which button should I choose? 🤔",
       "Try catching it 😈"
     );
 
@@ -155,8 +388,8 @@ function showScreen(screenId) {
   if (screenId === "level4") {
 
     setCharacters(
-      "wallet",
-      "waiting",
+      "normal",
+      "judging",
       "My wallet is in danger 😭💸",
       "I'm waiting... 👀💰"
     );
@@ -168,7 +401,7 @@ function showScreen(screenId) {
 
     setCharacters(
       "thinking",
-      "waiting",
+      "judging",
       "Which gift is safe? 🤔",
       "Choose carefully 😌"
     );
@@ -179,7 +412,7 @@ function showScreen(screenId) {
   if (screenId === "final-screen") {
 
     setCharacters(
-      "celebrate",
+      "happy",
       "happy",
       "I SURVIVED! 🎉😂",
       "Best brother approved! 👑❤️"
@@ -316,14 +549,15 @@ const questions = [
 let currentQuestion = 0;
 
 
-// ----------------------------------------
+// ========================================
 // LOAD QUESTION
-// ----------------------------------------
+// ========================================
 
 function loadQuestion() {
 
   const questionData =
     questions[currentQuestion];
+
 
   document.getElementById("question").innerText =
     questionData.question;
@@ -332,6 +566,7 @@ function loadQuestion() {
   const answersContainer =
     document.getElementById("answers");
 
+
   answersContainer.innerHTML = "";
 
 
@@ -339,11 +574,19 @@ function loadQuestion() {
     "auto";
 
 
+  // Character starts thinking
+  thinkingReaction(
+    "Hmm... think carefully 🤔",
+    "I'm watching your answer 👀"
+  );
+
+
   questionData.answers.forEach(
     (answer, index) => {
 
       const button =
         document.createElement("button");
+
 
       button.innerText =
         answer;
@@ -378,9 +621,9 @@ function loadQuestion() {
 }
 
 
-// ----------------------------------------
+// ========================================
 // CHECK ANSWER
-// ----------------------------------------
+// ========================================
 
 function checkAnswer(
   selectedIndex,
@@ -390,33 +633,40 @@ function checkAnswer(
   const questionData =
     questions[currentQuestion];
 
+
   const message =
     document.getElementById(
       "funny-message"
     );
 
 
+  // Prevent multiple clicks
+  const answersContainer =
+    document.getElementById("answers");
+
+
+  answersContainer.style.pointerEvents =
+    "none";
+
+
+  // ======================================
+  // CORRECT ANSWER
+  // ======================================
+
   if (
     selectedIndex ===
     questionData.correct
   ) {
-
 
     button.classList.add(
       "correct"
     );
 
 
-    setCharacters(
-
-      "celebrate",
-
-      "happy",
-
+    // LIVE REACTION
+    correctReaction(
       "YES! I knew it! 😎🎉",
-
       "Correct answer! Good boy 😌👑"
-
     );
 
 
@@ -437,23 +687,17 @@ function checkAnswer(
         questions.length
       ) {
 
-        setCharacters(
-
-          "thinking",
-
-          "judging",
-
+        thinkingReaction(
           "Hmm... next question 🤔",
-
           "Don't make a mistake now 😏"
-
         );
 
 
         loadQuestion();
 
-      } else {
+      }
 
+      else {
 
         document
           .getElementById(
@@ -467,16 +711,9 @@ function checkAnswer(
           "🏆 LEVEL 1 COMPLETE! Moving to the next challenge...";
 
 
-        setCharacters(
-
-          "celebrate",
-
-          "happy",
-
+        correctReaction(
           "Level 1 complete! 😎",
-
           "Okay... maybe you know me 😂"
-
         );
 
 
@@ -497,25 +734,27 @@ function checkAnswer(
 
     }, 1000);
 
+  }
 
-  } else {
 
+  // ======================================
+  // WRONG ANSWER
+  // ======================================
+
+  else {
 
     button.classList.add(
       "wrong"
     );
 
 
-    setCharacters(
+    // LIVE REACTION:
+    // BROTHER = SCARED
+    // SISTER = ANGRY
 
-      "scared",
-
-      "angry",
-
-      "OH NO 😨",
-
+    wrongReaction(
+      "OH NO! 😨",
       "SERIOUSLY BRO?! 😡"
-
     );
 
 
@@ -550,28 +789,21 @@ function checkAnswer(
       );
 
 
-      setCharacters(
-
-        "thinking",
-
-        "judging",
-
+      // Return to thinking state
+      thinkingReaction(
         "Okay... think again 😭",
-
         "Try again. Carefully. 😤"
-
       );
+
+
+      answersContainer.style.pointerEvents =
+        "auto";
 
     }, 1200);
 
   }
 
 }
-
-
-// Load first question
-
-loadQuestion();
 
 
 // ========================================
@@ -592,14 +824,22 @@ function startRakhiGame() {
     rakhiScore;
 
 
+  setCharacters(
+    "running",
+    "happy",
+    "I have to catch it! 🏃",
+    "Come on brother! 😂"
+  );
+
+
   moveRakhi();
 
 }
 
 
-// ----------------------------------------
+// ========================================
 // CATCH RAKHI
-// ----------------------------------------
+// ========================================
 
 function catchRakhi() {
 
@@ -612,16 +852,12 @@ function catchRakhi() {
     rakhiScore;
 
 
+  // LIVE REACTION
   setCharacters(
-
     "running",
-
-    "cheering",
-
+    "happy",
     "Almost caught it! 🏃💨",
-
     "Go brother! 😂🎉"
-
   );
 
 
@@ -660,21 +896,13 @@ function catchRakhi() {
 
   if (rakhiScore >= 5) {
 
-
     message.innerText =
       "🎉 LEVEL 2 COMPLETE! You are officially faster than expected 😂";
 
 
-    setCharacters(
-
-      "celebrate",
-
-      "happy",
-
+    correctReaction(
       "I DID IT! 😎",
-
       "Okay okay... impressive 😂"
-
     );
 
 
@@ -700,9 +928,9 @@ function catchRakhi() {
 }
 
 
-// ----------------------------------------
+// ========================================
 // MOVE RAKHI
-// ----------------------------------------
+// ========================================
 
 function moveRakhi() {
 
@@ -729,11 +957,17 @@ function moveRakhi() {
 
 
   const randomX =
-    Math.random() * maxX;
+    Math.max(
+      0,
+      Math.random() * maxX
+    );
 
 
   const randomY =
-    Math.random() * maxY;
+    Math.max(
+      0,
+      Math.random() * maxY
+    );
 
 
   rakhi.style.left =
@@ -771,17 +1005,15 @@ const buttonMessage =
 let escapeCount = 0;
 
 
-// ----------------------------------------
+// ========================================
 // GIFT BUTTON ESCAPES
-// ----------------------------------------
+// ========================================
 
 giftButton.addEventListener(
   "mouseenter",
   () => {
 
-
     if (escapeCount < 4) {
-
 
       const gameArea =
         document.querySelector(
@@ -822,15 +1054,10 @@ giftButton.addEventListener(
 
 
       setCharacters(
-
         "running",
-
         "happy",
-
         "HEY! Come back! 😭",
-
         "Catch it if you can 😈😂"
-
       );
 
 
@@ -849,7 +1076,10 @@ giftButton.addEventListener(
 
       buttonMessage.innerText =
         escapeMessages[
-          escapeCount
+          Math.min(
+            escapeCount,
+            escapeMessages.length - 1
+          )
         ];
 
 
@@ -861,25 +1091,19 @@ giftButton.addEventListener(
 );
 
 
-// ----------------------------------------
+// ========================================
 // WRONG BUTTON
-// ----------------------------------------
+// ========================================
 
 wrongButton.addEventListener(
   "click",
   () => {
 
+    // LIVE WRONG REACTION
 
-    setCharacters(
-
-      "scared",
-
-      "angry",
-
+    wrongReaction(
       "I pressed the wrong one 😭",
-
       "THAT WAS NOT THE GIFT! 😡"
-
     );
 
 
@@ -908,28 +1132,19 @@ wrongButton.addEventListener(
 );
 
 
-// ----------------------------------------
+// ========================================
 // GIFT BUTTON
-// ----------------------------------------
+// ========================================
 
 giftButton.addEventListener(
   "click",
   () => {
 
-
     if (escapeCount >= 4) {
 
-
-      setCharacters(
-
-        "celebrate",
-
-        "happy",
-
+      correctReaction(
         "Finally! 🎉",
-
         "Okay... you win 😂"
-
       );
 
 
@@ -948,8 +1163,16 @@ giftButton.addEventListener(
 
       }, 1500);
 
+    }
 
-    } else {
+    else {
+
+      setCharacters(
+        "thinking",
+        "judging",
+        "Wait... 😳",
+        "Not yet, brother 😈"
+      );
 
 
       buttonMessage.innerText =
@@ -983,19 +1206,18 @@ function checkMoney() {
     );
 
 
-  if (!amount || amount < 0) {
+  // ======================================
+  // INVALID AMOUNT
+  // ======================================
 
+  if (
+    !amount ||
+    amount < 0
+  ) {
 
-    setCharacters(
-
-      "thinking",
-
-      "judging",
-
+    thinkingReaction(
       "What should I enter? 😭",
-
       "Is that a valid amount? 🤨"
-
     );
 
 
@@ -1008,19 +1230,17 @@ function checkMoney() {
   }
 
 
+  // ======================================
+  // ₹100 OR LESS
+  // ======================================
+
   if (amount <= 100) {
 
-
-    setCharacters(
-
-      "scared",
-
-      "angry",
-
+    wrongReaction(
       "Uh oh 😨",
-
-      "₹" + amount + "?! ARE YOU SERIOUS?! 😡"
-
+      "₹" +
+      amount +
+      "?! ARE YOU SERIOUS?! 😡"
     );
 
 
@@ -1029,60 +1249,58 @@ function checkMoney() {
       amount +
       "? INSULT DETECTED! Try again with more respect 😂";
 
+  }
 
-  } else if (amount <= 500) {
 
+  // ======================================
+  // ₹101 - ₹500
+  // ======================================
+
+  else if (amount <= 500) {
 
     setCharacters(
-
-      "wallet",
-
+      "normal",
       "judging",
-
       "That's all? 😭",
-
       "Hmm... seriously? 🤨"
-
     );
 
 
     result.innerText =
       "🤨 Hmm... seriously? We can do better.";
 
+  }
 
-  } else if (amount < 1000) {
 
+  // ======================================
+  // ₹501 - ₹999
+  // ======================================
+
+  else if (amount < 1000) {
 
     setCharacters(
-
-      "wallet",
-
-      "waiting",
-
+      "normal",
+      "judging",
       "Maybe this is enough? 😅",
-
       "Almost... but not enough 😏"
-
     );
 
 
     result.innerText =
       "😐 Not bad... but sister expected more.";
 
+  }
 
-  } else if (amount < 5000) {
 
+  // ======================================
+  // ₹1000 - ₹4999
+  // ======================================
 
-    setCharacters(
+  else if (amount < 5000) {
 
-      "celebrate",
-
-      "happy",
-
+    correctReaction(
       "My wallet survived! 😂",
-
       "Now we're talking! 😍"
-
     );
 
 
@@ -1092,20 +1310,18 @@ function checkMoney() {
 
     createConfetti(30);
 
+  }
 
-  } else {
 
+  // ======================================
+  // ₹5000+
+  // ======================================
 
-    setCharacters(
+  else {
 
-      "celebrate",
-
-      "happy",
-
+    correctReaction(
       "BEST BROTHER! 😎💸",
-
       "I APPROVE! 👑😂"
-
     );
 
 
@@ -1120,11 +1336,13 @@ function checkMoney() {
   }
 
 
+  // ======================================
+  // MOVE TO LEVEL 5
+  // ======================================
+
   if (amount >= 1000) {
 
-
     setTimeout(() => {
-
 
       result.innerText +=
         " 🎉 LEVEL 4 COMPLETE!";
@@ -1137,7 +1355,6 @@ function checkMoney() {
         );
 
       }, 1500);
-
 
     }, 800);
 
@@ -1158,16 +1375,11 @@ function wrongGift(gift) {
     );
 
 
-  setCharacters(
+  // LIVE WRONG REACTION
 
-    "scared",
-
-    "angry",
-
+  wrongReaction(
     "Wrong gift?! 😨",
-
     "WHAT IS THIS?! 😡"
-
   );
 
 
@@ -1203,9 +1415,9 @@ function wrongGift(gift) {
 }
 
 
-// ----------------------------------------
+// ========================================
 // CORRECT GIFT
-// ----------------------------------------
+// ========================================
 
 function correctGift() {
 
@@ -1215,16 +1427,11 @@ function correctGift() {
     );
 
 
-  setCharacters(
+  // LIVE CORRECT REACTION
 
-    "celebrate",
-
-    "happy",
-
+  correctReaction(
     "I CHOSE WISELY! 😎🎉",
-
     "SISTER APPROVES! 👑😍"
-
   );
 
 
@@ -1263,16 +1470,9 @@ function finalPromise() {
     );
 
 
-  setCharacters(
-
-    "celebrate",
-
-    "happy",
-
+  correctReaction(
     "Promise made! 😂",
-
     "Screenshot saved! 😈📸"
-
   );
 
 
@@ -1319,7 +1519,6 @@ function createConfetti(amount) {
     i < amount;
     i++
   ) {
-
 
     const confetti =
       document.createElement(
@@ -1414,13 +1613,8 @@ function showPopup(message) {
 // ========================================
 
 setCharacters(
-
-  "",
-
-  "",
-
+  "normal",
+  "normal",
   "Ready for the challenge? 😎",
-
   "Let's see if you survive 😈"
-
 );
