@@ -1130,30 +1130,44 @@ button:disabled {
     rotate(10deg);
 }
 
+/* =========================================
+   MONEY GIFT
+   DO NOT REVEAL CORRECT ANSWER
+========================================= */
+
 .money-gift {
-  background:
-    linear-gradient(
-      135deg,
-      #e6ffe9,
-      #d9fff2
-    );
+  background: white;
+  border: 2px solid #eee2f5;
+  animation: none;
+}
+
+/* Only show green AFTER the player selects it */
+
+.gift-card.correct-selected {
+  background: linear-gradient(
+    135deg,
+    #e6ffe9,
+    #d9fff2
+  );
 
   border-color: #7cd899;
 
-  animation:
-    moneyBounce 2s infinite;
+  animation: correctGiftPulse 0.6s ease;
 }
 
-@keyframes moneyBounce {
-  0%, 100% {
-    transform: translateY(0);
+@keyframes correctGiftPulse {
+  0% {
+    transform: scale(1);
   }
 
   50% {
-    transform: translateY(-5px);
+    transform: scale(1.08);
+  }
+
+  100% {
+    transform: scale(1);
   }
 }
-
 
 /* =========================================
    FINAL
