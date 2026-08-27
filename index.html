@@ -29,22 +29,32 @@
 
   <!-- ========================================
        BROTHER + SISTER CHARACTERS
+       LIVE REACTIONS
   ========================================= -->
 
   <div class="character-stage">
 
     <!-- BROTHER -->
-    <div class="character brother" id="brother-character">
+    <div
+      class="character brother"
+      id="brother-character"
+      data-character="brother"
+    >
 
-      <div class="speech-bubble brother-bubble" id="brother-bubble">
+      <div
+        class="speech-bubble brother-bubble"
+        id="brother-bubble"
+      >
         Hmm... what is the right answer? 🤔
       </div>
 
       <img
-        src="images/brother.png"
+        src="images/brother-normal.png"
         class="character-image"
         id="brother-image"
+        data-reaction="normal"
         alt="Brother"
+        loading="eager"
       />
 
       <div class="character-label">
@@ -55,17 +65,26 @@
 
 
     <!-- SISTER -->
-    <div class="character sister" id="sister-character">
+    <div
+      class="character sister"
+      id="sister-character"
+      data-character="sister"
+    >
 
-      <div class="speech-bubble sister-bubble" id="sister-bubble">
+      <div
+        class="speech-bubble sister-bubble"
+        id="sister-bubble"
+      >
         Choose wisely, bro 😏
       </div>
 
       <img
-        src="images/sister.png"
+        src="images/sister-normal.png"
         class="character-image"
         id="sister-image"
+        data-reaction="normal"
         alt="Sister"
+        loading="eager"
       />
 
       <div class="character-label">
@@ -77,7 +96,9 @@
   </div>
 
 
-  <!-- MAIN GAME -->
+  <!-- ========================================
+       MAIN GAME
+  ========================================= -->
 
   <main class="game-container">
 
@@ -109,7 +130,10 @@
           ⚠️ You must complete all 5 levels to prove that you are a worthy brother.
         </div>
 
-        <button class="main-btn" onclick="startGame()">
+        <button
+          class="main-btn"
+          onclick="startGame()"
+        >
           START THE CHALLENGE 🚀
         </button>
 
@@ -146,7 +170,8 @@
         <div class="progress">
           <div
             class="progress-fill"
-            id="progress-fill">
+            id="progress-fill"
+          >
           </div>
         </div>
 
@@ -158,14 +183,16 @@
 
           <div
             id="answers"
-            class="answer-grid">
+            class="answer-grid"
+          >
           </div>
 
         </div>
 
         <div
           id="funny-message"
-          class="funny-message">
+          class="funny-message"
+        >
         </div>
 
       </div>
@@ -206,20 +233,18 @@
 
           <button
             id="rakhi"
-            onclick="catchRakhi()">
-
+            onclick="catchRakhi()"
+          >
             🎀
-
           </button>
 
         </div>
 
         <p
           id="rakhi-message"
-          class="funny-message">
-
+          class="funny-message"
+        >
           It looks innocent... but it is fast 😈
-
         </p>
 
       </div>
@@ -252,28 +277,25 @@
 
           <button
             id="gift-button"
-            class="gift-btn">
-
+            class="gift-btn"
+          >
             🎁 CLAIM YOUR GIFT
-
           </button>
 
           <button
             id="wrong-button"
-            class="wrong-btn">
-
+            class="wrong-btn"
+          >
             💀 NOTHING HERE
-
           </button>
 
         </div>
 
         <p
           id="button-message"
-          class="funny-message">
-
+          class="funny-message"
+        >
           Choose wisely, brother 😏
-
         </p>
 
       </div>
@@ -310,15 +332,15 @@
 
         <button
           class="main-btn small-btn"
-          onclick="checkMoney()">
-
+          onclick="checkMoney()"
+        >
           CHECK AMOUNT 💸
-
         </button>
 
         <div
           id="money-result"
-          class="money-result">
+          class="money-result"
+        >
         </div>
 
       </div>
@@ -351,71 +373,64 @@
 
           <button
             class="gift-card"
-            onclick="wrongGift('🧸')">
-
+            onclick="wrongGift('🧸')"
+          >
             <span>🧸</span>
             Teddy
-
           </button>
 
 
           <button
             class="gift-card"
-            onclick="wrongGift('🍫')">
-
+            onclick="wrongGift('🍫')"
+          >
             <span>🍫</span>
             Chocolate
-
           </button>
 
 
           <button
             class="gift-card"
-            onclick="wrongGift('🧦')">
-
+            onclick="wrongGift('🧦')"
+          >
             <span>🧦</span>
             Socks
-
           </button>
 
 
           <button
             class="gift-card"
-            onclick="wrongGift('🪨')">
-
+            onclick="wrongGift('🪨')"
+          >
             <span>🪨</span>
             A Stone
-
           </button>
 
 
           <button
             class="gift-card money-gift"
-            onclick="correctGift()">
-
+            onclick="correctGift()"
+          >
             <span>💰</span>
             Money
-
           </button>
 
 
           <button
             class="gift-card"
-            onclick="wrongGift('🎁')">
-
+            onclick="wrongGift('🎁')"
+          >
             <span>🎁</span>
             Mystery Gift
-
           </button>
 
         </div>
 
         <p
           id="gift-message"
-          class="funny-message">
-
+          class="funny-message"
+        >
           Think carefully... your future depends on this 😂
-
         </p>
 
       </div>
@@ -430,7 +445,8 @@
 
     <section
       id="final-screen"
-      class="screen">
+      class="screen"
+    >
 
       <div class="game-card final-card">
 
@@ -480,15 +496,15 @@
 
         <button
           class="main-btn"
-          onclick="finalPromise()">
-
+          onclick="finalPromise()"
+        >
           🎁 I PROMISE TO GIVE A NICE GIFT
-
         </button>
 
         <p
           id="promise-message"
-          class="funny-message">
+          class="funny-message"
+        >
         </p>
 
       </div>
@@ -498,18 +514,27 @@
   </main>
 
 
-  <!-- CONFETTI -->
+  <!-- ========================================
+       CONFETTI
+  ========================================= -->
 
   <div id="confetti-container"></div>
 
 
-  <!-- POPUP -->
+  <!-- ========================================
+       POPUP
+  ========================================= -->
 
   <div
     id="popup"
-    class="popup">
+    class="popup"
+  >
   </div>
 
+
+  <!-- ========================================
+       JAVASCRIPT
+  ========================================= -->
 
   <script src="script.js"></script>
 
