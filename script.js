@@ -4,151 +4,86 @@
 
 
 // ========================================
-// BROTHER + SISTER CHARACTER DATA
+// CHARACTER SYSTEM
 // ========================================
 
-const characterScenes = {
+const brotherCharacter =
+  document.getElementById("brother-character");
 
-  "start-screen": {
-    className: "home-characters",
-    brotherAction: "👋",
-    brotherName: "Brother",
-    sisterAction: "💖",
-    sisterName: "Sister"
-  },
+const sisterCharacter =
+  document.getElementById("sister-character");
 
-  "level1": {
-    className: "level1-characters",
-    brotherAction: "🤔",
-    brotherName: "Thinking...",
-    sisterAction: "👀",
-    sisterName: "Judging 👑"
-  },
+const brotherBubble =
+  document.getElementById("brother-bubble");
 
-  "level2": {
-    className: "level2-characters",
-    brotherAction: "🏃💨",
-    brotherName: "RUN BROTHER!",
-    sisterAction: "👏",
-    sisterName: "Catch it! 😂"
-  },
+const sisterBubble =
+  document.getElementById("sister-bubble");
 
-  "level3": {
-    className: "level3-characters",
-    brotherAction: "🏃",
-    brotherName: "Catch me!",
-    sisterAction: "😈",
-    sisterName: "Too slow!"
-  },
 
-  "level4": {
-    className: "level4-characters",
-    brotherAction: "🫣💰",
-    brotherName: "My wallet...",
-    sisterAction: "💸",
-    sisterName: "Waiting... 😌"
-  },
+// ----------------------------------------
+// RESET CHARACTER STATES
+// ----------------------------------------
 
-  "level5": {
-    className: "level5-characters",
-    brotherAction: "🤯",
-    brotherName: "What should I choose?",
-    sisterAction: "👑🎁",
-    sisterName: "Choose wisely!"
-  },
+function resetCharacters() {
 
-  "final-screen": {
-    className: "final-characters",
-    brotherAction: "🎉🙌",
-    brotherName: "BEST BROTHER!",
-    sisterAction: "🥳💖",
-    sisterName: "BEST SISTER!"
+  brotherCharacter.className =
+    "character brother";
+
+  sisterCharacter.className =
+    "character sister";
+
+}
+
+
+// ----------------------------------------
+// CHANGE CHARACTER ACTION
+// ----------------------------------------
+
+function setCharacters(
+  brotherAction,
+  sisterAction,
+  brotherText,
+  sisterText
+) {
+
+  resetCharacters();
+
+  if (brotherAction) {
+
+    brotherCharacter.classList.add(
+      brotherAction
+    );
+
   }
 
-};
+  if (sisterAction) {
 
+    sisterCharacter.classList.add(
+      sisterAction
+    );
 
-// ========================================
-// CREATE BROTHER + SISTER CHARACTERS
-// ========================================
-
-function createCharacters(screenId) {
-
-  const screen = document.getElementById(screenId);
-
-  if (!screen) return;
-
-  // Prevent duplicate characters
-  if (screen.querySelector(".character-stage")) {
-    return;
   }
 
-  const scene = characterScenes[screenId];
+  if (brotherText) {
 
-  if (!scene) return;
+    brotherBubble.innerText =
+      brotherText;
 
-  const stage = document.createElement("div");
+  }
 
-  stage.className =
-    `character-stage ${scene.className}`;
+  if (sisterText) {
 
-  stage.innerHTML = `
+    sisterBubble.innerText =
+      sisterText;
 
-    <!-- BROTHER -->
+  }
 
-    <div class="character brother">
-
-      <div class="character-action">
-        ${scene.brotherAction}
-      </div>
-
-      <div class="avatar">
-        👦🏻
-      </div>
-
-      <div class="character-name">
-        ${scene.brotherName}
-      </div>
-
-    </div>
-
-
-    <!-- SISTER -->
-
-    <div class="character sister">
-
-      <div class="character-action">
-        ${scene.sisterAction}
-      </div>
-
-      <div class="avatar">
-        👧🏻
-      </div>
-
-      <div class="character-name">
-        ${scene.sisterName}
-      </div>
-
-    </div>
-
-  `;
-
-  screen.appendChild(stage);
 }
 
 
 // ========================================
-// CREATE CHARACTERS ON ALL SCREENS
-// ========================================
-
-Object.keys(characterScenes).forEach((screenId) => {
-  createCharacters(screenId);
-});
-
-
-// ----------------------------------------
 // SCREEN MANAGEMENT
-// ----------------------------------------
+// ========================================
 
 function showScreen(screenId) {
 
@@ -156,29 +91,117 @@ function showScreen(screenId) {
     document.querySelectorAll(".screen");
 
   screens.forEach((screen) => {
+
     screen.classList.remove("active");
+
   });
 
   const nextScreen =
     document.getElementById(screenId);
 
-  if (!nextScreen) return;
-
   nextScreen.classList.add("active");
 
-  // Make sure characters exist
-  createCharacters(screenId);
+
+  // CHARACTER ACTIONS PER SCREEN
+
+  if (screenId === "start-screen") {
+
+    setCharacters(
+      "",
+      "",
+      "Ready for the challenge? 😎",
+      "Let's see if you survive 😈"
+    );
+
+  }
+
+
+  if (screenId === "level1") {
+
+    setCharacters(
+      "thinking",
+      "judging",
+      "Hmm... think carefully 🤔",
+      "I am watching you 👀"
+    );
+
+  }
+
+
+  if (screenId === "level2") {
+
+    setCharacters(
+      "running",
+      "cheering",
+      "I have to catch it! 🏃",
+      "Faster brother! 😂"
+    );
+
+  }
+
+
+  if (screenId === "level3") {
+
+    setCharacters(
+      "thinking",
+      "judging",
+      "Why is this button running?! 😭",
+      "Try catching it 😈"
+    );
+
+  }
+
+
+  if (screenId === "level4") {
+
+    setCharacters(
+      "wallet",
+      "waiting",
+      "My wallet is in danger 😭💸",
+      "I'm waiting... 👀💰"
+    );
+
+  }
+
+
+  if (screenId === "level5") {
+
+    setCharacters(
+      "thinking",
+      "waiting",
+      "Which gift is safe? 🤔",
+      "Choose carefully 😌"
+    );
+
+  }
+
+
+  if (screenId === "final-screen") {
+
+    setCharacters(
+      "celebrate",
+      "happy",
+      "I SURVIVED! 🎉😂",
+      "Best brother approved! 👑❤️"
+    );
+
+  }
+
 
   window.scrollTo({
+
     top: 0,
+
     behavior: "smooth"
+
   });
+
 }
 
 
-// ----------------------------------------
+// ========================================
 // START GAME
-// ----------------------------------------
+// ========================================
 
 function startGame() {
 
@@ -188,77 +211,103 @@ function startGame() {
 
 
 // ========================================
-// LEVEL 1 - SISTER QUIZ 🧠
+// LEVEL 1 - QUIZ
 // ========================================
 
 const questions = [
 
   {
-    question: "Who is always right? 😌",
+
+    question:
+      "Who is always right? 😌",
 
     answers: [
+
       "Brother 😎",
       "Sister 👑",
       "Both 😂",
       "Nobody 🤨"
+
     ],
 
     correct: 1
+
   },
 
+
   {
-    question: "Who is the favourite child? 😏",
+
+    question:
+      "Who is the favourite child? 😏",
 
     answers: [
+
       "Obviously Sister 😌",
       "Brother 😂",
       "The neighbour 💀",
       "The pet 🐶"
+
     ],
 
     correct: 0
+
   },
 
+
   {
+
     question:
       "If your sister says 'I'm fine', what does it actually mean? 🤨",
 
     answers: [
+
       "She is actually fine 😌",
       "RUN. Something is coming. 🏃💨",
       "She wants chocolate 🍫",
       "Game over 💀"
+
     ],
 
     correct: 1
+
   },
 
+
   {
+
     question:
       "What is the correct answer when your sister asks, 'Who is prettier?' 😈",
 
     answers: [
+
       "My sister 👑",
       "Let me think 🤔",
       "Someone else 💀",
       "I refuse to answer 😂"
+
     ],
 
     correct: 0
+
   },
 
+
   {
+
     question:
       "What should a good brother give on Rakshabandhan? 🎁",
 
     answers: [
+
       "A random stone 🪨",
       "Nothing 😂",
       "A nice gift + money 💸",
       "His old socks 🧦"
+
     ],
 
     correct: 2
+
   }
 
 ];
@@ -286,32 +335,44 @@ function loadQuestion() {
   answersContainer.innerHTML = "";
 
 
+  answersContainer.style.pointerEvents =
+    "auto";
+
+
   questionData.answers.forEach(
     (answer, index) => {
 
       const button =
         document.createElement("button");
 
-      button.innerText = answer;
+      button.innerText =
+        answer;
 
 
       button.addEventListener(
         "click",
         () => {
-          checkAnswer(index, button);
+
+          checkAnswer(
+            index,
+            button
+          );
+
         }
       );
 
 
-      answersContainer.appendChild(button);
+      answersContainer.appendChild(
+        button
+      );
 
     }
   );
 
 
-  document.getElementById(
-    "progress-fill"
-  ).style.width =
+  document
+    .getElementById("progress-fill")
+    .style.width =
     `${(currentQuestion / questions.length) * 100}%`;
 
 }
@@ -340,7 +401,23 @@ function checkAnswer(
     questionData.correct
   ) {
 
-    button.classList.add("correct");
+
+    button.classList.add(
+      "correct"
+    );
+
+
+    setCharacters(
+
+      "celebrate",
+
+      "happy",
+
+      "YES! I knew it! 😎🎉",
+
+      "Correct answer! Good boy 😌👑"
+
+    );
 
 
     message.innerText =
@@ -360,17 +437,47 @@ function checkAnswer(
         questions.length
       ) {
 
+        setCharacters(
+
+          "thinking",
+
+          "judging",
+
+          "Hmm... next question 🤔",
+
+          "Don't make a mistake now 😏"
+
+        );
+
+
         loadQuestion();
 
       } else {
 
-        document.getElementById(
-          "progress-fill"
-        ).style.width = "100%";
+
+        document
+          .getElementById(
+            "progress-fill"
+          )
+          .style.width =
+          "100%";
 
 
         message.innerText =
           "🏆 LEVEL 1 COMPLETE! Moving to the next challenge...";
+
+
+        setCharacters(
+
+          "celebrate",
+
+          "happy",
+
+          "Level 1 complete! 😎",
+
+          "Okay... maybe you know me 😂"
+
+        );
 
 
         createConfetti(60);
@@ -378,7 +485,9 @@ function checkAnswer(
 
         setTimeout(() => {
 
-          showScreen("level2");
+          showScreen(
+            "level2"
+          );
 
           startRakhiGame();
 
@@ -391,7 +500,23 @@ function checkAnswer(
 
   } else {
 
-    button.classList.add("wrong");
+
+    button.classList.add(
+      "wrong"
+    );
+
+
+    setCharacters(
+
+      "scared",
+
+      "angry",
+
+      "OH NO 😨",
+
+      "SERIOUSLY BRO?! 😡"
+
+    );
 
 
     const wrongMessages = [
@@ -420,41 +545,51 @@ function checkAnswer(
 
     setTimeout(() => {
 
-      button.classList.remove("wrong");
+      button.classList.remove(
+        "wrong"
+      );
 
-    }, 500);
+
+      setCharacters(
+
+        "thinking",
+
+        "judging",
+
+        "Okay... think again 😭",
+
+        "Try again. Carefully. 😤"
+
+      );
+
+    }, 1200);
 
   }
 
 }
 
 
-// ----------------------------------------
-// LOAD FIRST QUESTION
-// ----------------------------------------
+// Load first question
 
 loadQuestion();
 
 
 // ========================================
-// LEVEL 2 - CATCH THE RAKHI 🎀
+// LEVEL 2 - CATCH RAKHI
 // ========================================
 
 let rakhiScore = 0;
 
-
-// ----------------------------------------
-// START RAKHI GAME
-// ----------------------------------------
 
 function startRakhiGame() {
 
   rakhiScore = 0;
 
 
-  document.getElementById(
-    "rakhi-score"
-  ).innerText = rakhiScore;
+  document
+    .getElementById("rakhi-score")
+    .innerText =
+    rakhiScore;
 
 
   moveRakhi();
@@ -471,9 +606,23 @@ function catchRakhi() {
   rakhiScore++;
 
 
-  document.getElementById(
-    "rakhi-score"
-  ).innerText = rakhiScore;
+  document
+    .getElementById("rakhi-score")
+    .innerText =
+    rakhiScore;
+
+
+  setCharacters(
+
+    "running",
+
+    "cheering",
+
+    "Almost caught it! 🏃💨",
+
+    "Go brother! 😂🎉"
+
+  );
 
 
   const message =
@@ -511,8 +660,22 @@ function catchRakhi() {
 
   if (rakhiScore >= 5) {
 
+
     message.innerText =
       "🎉 LEVEL 2 COMPLETE! You are officially faster than expected 😂";
+
+
+    setCharacters(
+
+      "celebrate",
+
+      "happy",
+
+      "I DID IT! 😎",
+
+      "Okay okay... impressive 😂"
+
+    );
 
 
     createConfetti(70);
@@ -520,12 +683,15 @@ function catchRakhi() {
 
     setTimeout(() => {
 
-      showScreen("level3");
+      showScreen(
+        "level3"
+      );
 
     }, 1500);
 
 
     return;
+
   }
 
 
@@ -552,9 +718,6 @@ function moveRakhi() {
     );
 
 
-  if (!area || !rakhi) return;
-
-
   const maxX =
     area.clientWidth -
     rakhi.offsetWidth;
@@ -566,13 +729,11 @@ function moveRakhi() {
 
 
   const randomX =
-    Math.random() *
-    Math.max(maxX, 0);
+    Math.random() * maxX;
 
 
   const randomY =
-    Math.random() *
-    Math.max(maxY, 0);
+    Math.random() * maxY;
 
 
   rakhi.style.left =
@@ -586,7 +747,7 @@ function moveRakhi() {
 
 
 // ========================================
-// LEVEL 3 - DON'T CLICK WRONG BUTTON 😈
+// LEVEL 3 - BUTTON GAME
 // ========================================
 
 const giftButton =
@@ -611,14 +772,16 @@ let escapeCount = 0;
 
 
 // ----------------------------------------
-// GIFT BUTTON RUNS AWAY
+// GIFT BUTTON ESCAPES
 // ----------------------------------------
 
 giftButton.addEventListener(
   "mouseenter",
   () => {
 
+
     if (escapeCount < 4) {
+
 
       const gameArea =
         document.querySelector(
@@ -658,6 +821,19 @@ giftButton.addEventListener(
         `${randomY}px`;
 
 
+      setCharacters(
+
+        "running",
+
+        "happy",
+
+        "HEY! Come back! 😭",
+
+        "Catch it if you can 😈😂"
+
+      );
+
+
       const escapeMessages = [
 
         "😂 Too slow!",
@@ -672,7 +848,9 @@ giftButton.addEventListener(
 
 
       buttonMessage.innerText =
-        escapeMessages[escapeCount];
+        escapeMessages[
+          escapeCount
+        ];
 
 
       escapeCount++;
@@ -690,6 +868,20 @@ giftButton.addEventListener(
 wrongButton.addEventListener(
   "click",
   () => {
+
+
+    setCharacters(
+
+      "scared",
+
+      "angry",
+
+      "I pressed the wrong one 😭",
+
+      "THAT WAS NOT THE GIFT! 😡"
+
+    );
+
 
     const messages = [
 
@@ -712,33 +904,34 @@ wrongButton.addEventListener(
         )
       ];
 
-
-    wrongButton.classList.add(
-      "wrong-click"
-    );
-
-
-    setTimeout(() => {
-
-      wrongButton.classList.remove(
-        "wrong-click"
-      );
-
-    }, 500);
-
   }
 );
 
 
 // ----------------------------------------
-// GIFT BUTTON CLICK
+// GIFT BUTTON
 // ----------------------------------------
 
 giftButton.addEventListener(
   "click",
   () => {
 
+
     if (escapeCount >= 4) {
+
+
+      setCharacters(
+
+        "celebrate",
+
+        "happy",
+
+        "Finally! 🎉",
+
+        "Okay... you win 😂"
+
+      );
+
 
       buttonMessage.innerText =
         "🎉 LEVEL 3 COMPLETE! You finally caught the button 😂";
@@ -749,12 +942,15 @@ giftButton.addEventListener(
 
       setTimeout(() => {
 
-        showScreen("level4");
+        showScreen(
+          "level4"
+        );
 
       }, 1500);
 
 
     } else {
+
 
       buttonMessage.innerText =
         "😂 Hey! You're not supposed to catch it yet!";
@@ -766,16 +962,18 @@ giftButton.addEventListener(
 
 
 // ========================================
-// LEVEL 4 - MONEY CALCULATOR 💸
+// LEVEL 4 - MONEY
 // ========================================
 
 function checkMoney() {
 
   const amount =
     Number(
-      document.getElementById(
-        "money-input"
-      ).value
+      document
+        .getElementById(
+          "money-input"
+        )
+        .value
     );
 
 
@@ -787,8 +985,23 @@ function checkMoney() {
 
   if (!amount || amount < 0) {
 
+
+    setCharacters(
+
+      "thinking",
+
+      "judging",
+
+      "What should I enter? 😭",
+
+      "Is that a valid amount? 🤨"
+
+    );
+
+
     result.innerText =
       "🤨 Please enter a valid amount, brother.";
+
 
     return;
 
@@ -796,6 +1009,20 @@ function checkMoney() {
 
 
   if (amount <= 100) {
+
+
+    setCharacters(
+
+      "scared",
+
+      "angry",
+
+      "Uh oh 😨",
+
+      "₹" + amount + "?! ARE YOU SERIOUS?! 😡"
+
+    );
+
 
     result.innerText =
       "😡 ₹" +
@@ -805,17 +1032,59 @@ function checkMoney() {
 
   } else if (amount <= 500) {
 
+
+    setCharacters(
+
+      "wallet",
+
+      "judging",
+
+      "That's all? 😭",
+
+      "Hmm... seriously? 🤨"
+
+    );
+
+
     result.innerText =
       "🤨 Hmm... seriously? We can do better.";
 
 
   } else if (amount < 1000) {
 
+
+    setCharacters(
+
+      "wallet",
+
+      "waiting",
+
+      "Maybe this is enough? 😅",
+
+      "Almost... but not enough 😏"
+
+    );
+
+
     result.innerText =
       "😐 Not bad... but sister expected more.";
 
 
   } else if (amount < 5000) {
+
+
+    setCharacters(
+
+      "celebrate",
+
+      "happy",
+
+      "My wallet survived! 😂",
+
+      "Now we're talking! 😍"
+
+    );
+
 
     result.innerText =
       "😍 Now we're talking! Sister happiness increased.";
@@ -825,6 +1094,20 @@ function checkMoney() {
 
 
   } else {
+
+
+    setCharacters(
+
+      "celebrate",
+
+      "happy",
+
+      "BEST BROTHER! 😎💸",
+
+      "I APPROVE! 👑😂"
+
+    );
+
 
     result.innerText =
       "👑 BEST BROTHER ALERT! ₹" +
@@ -837,11 +1120,11 @@ function checkMoney() {
   }
 
 
-  // Complete level if amount is ₹1000 or more
-
   if (amount >= 1000) {
 
+
     setTimeout(() => {
+
 
       result.innerText +=
         " 🎉 LEVEL 4 COMPLETE!";
@@ -849,9 +1132,12 @@ function checkMoney() {
 
       setTimeout(() => {
 
-        showScreen("level5");
+        showScreen(
+          "level5"
+        );
 
       }, 1500);
+
 
     }, 800);
 
@@ -861,7 +1147,7 @@ function checkMoney() {
 
 
 // ========================================
-// LEVEL 5 - GIFT CHALLENGE 🎁
+// LEVEL 5 - GIFT
 // ========================================
 
 function wrongGift(gift) {
@@ -870,6 +1156,19 @@ function wrongGift(gift) {
     document.getElementById(
       "gift-message"
     );
+
+
+  setCharacters(
+
+    "scared",
+
+    "angry",
+
+    "Wrong gift?! 😨",
+
+    "WHAT IS THIS?! 😡"
+
+  );
 
 
   const giftMessages = {
@@ -916,6 +1215,19 @@ function correctGift() {
     );
 
 
+  setCharacters(
+
+    "celebrate",
+
+    "happy",
+
+    "I CHOSE WISELY! 😎🎉",
+
+    "SISTER APPROVES! 👑😍"
+
+  );
+
+
   message.innerText =
     "🚨 CORRECT ANSWER DETECTED! 💰 SISTER APPROVES! 👑😂";
 
@@ -930,7 +1242,9 @@ function correctGift() {
 
   setTimeout(() => {
 
-    showScreen("final-screen");
+    showScreen(
+      "final-screen"
+    );
 
   }, 1800);
 
@@ -938,7 +1252,7 @@ function correctGift() {
 
 
 // ========================================
-// FINAL PROMISE 😂
+// FINAL PROMISE
 // ========================================
 
 function finalPromise() {
@@ -947,6 +1261,19 @@ function finalPromise() {
     document.getElementById(
       "promise-message"
     );
+
+
+  setCharacters(
+
+    "celebrate",
+
+    "happy",
+
+    "Promise made! 😂",
+
+    "Screenshot saved! 😈📸"
+
+  );
 
 
   message.innerText =
@@ -964,7 +1291,7 @@ function finalPromise() {
 
 
 // ========================================
-// CONFETTI 🎉
+// CONFETTI
 // ========================================
 
 function createConfetti(amount) {
@@ -993,6 +1320,7 @@ function createConfetti(amount) {
     i++
   ) {
 
+
     const confetti =
       document.createElement(
         "div"
@@ -1014,18 +1342,21 @@ function createConfetti(amount) {
 
 
     confetti.style.left =
-      Math.random() * 100 +
+      Math.random() *
+      100 +
       "vw";
 
 
     confetti.style.fontSize =
-      Math.random() * 20 +
+      Math.random() *
+      20 +
       15 +
       "px";
 
 
     confetti.style.animationDuration =
-      Math.random() * 2 +
+      Math.random() *
+      2 +
       2 +
       "s";
 
@@ -1079,40 +1410,17 @@ function showPopup(message) {
 
 
 // ========================================
-// RESET GAME SUPPORT
+// INITIAL CHARACTER STATE
 // ========================================
 
-function resetGame() {
+setCharacters(
 
-  currentQuestion = 0;
+  "",
 
-  rakhiScore = 0;
+  "",
 
-  escapeCount = 0;
+  "Ready for the challenge? 😎",
 
+  "Let's see if you survive 😈"
 
-  const giftButton =
-    document.getElementById(
-      "gift-button"
-    );
-
-
-  if (giftButton) {
-
-    giftButton.style.position =
-      "";
-
-    giftButton.style.left =
-      "";
-
-    giftButton.style.top =
-      "";
-
-  }
-
-
-  loadQuestion();
-
-  showScreen("start-screen");
-
-}
+);
