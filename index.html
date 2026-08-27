@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,7 +12,7 @@
 
 <body>
 
-  <!-- Floating background emojis -->
+  <!-- FLOATING BACKGROUND -->
   <div class="emoji-background">
     <span>😂</span>
     <span>🎁</span>
@@ -26,35 +27,74 @@
   </div>
 
 
-  <!-- MAIN GAME -->
-  <main class="game-container">
+  <!-- ========================================
+       BROTHER + SISTER CHARACTERS
+  ========================================= -->
 
-    <!-- START SCREEN -->
-    <section id="start-screen" class="screen active">
+  <div class="character-stage">
 
-      <!-- Brother + Sister -->
-      <div class="character-stage home-characters">
+    <!-- BROTHER -->
+    <div class="character brother" id="brother-character">
 
-        <div class="character brother">
-          <div class="character-action">👋</div>
-          <div class="avatar">👦</div>
-          <span class="character-name">Brother</span>
-        </div>
-
-        <div class="character sister">
-          <div class="character-action">🎀</div>
-          <div class="avatar">👧</div>
-          <span class="character-name">Sister</span>
-        </div>
-
+      <div class="speech-bubble brother-bubble" id="brother-bubble">
+        Hmm... what is the right answer? 🤔
       </div>
 
+      <img
+        src="images/brother.png"
+        class="character-image"
+        id="brother-image"
+        alt="Brother"
+      />
+
+      <div class="character-label">
+        BROTHER 😎
+      </div>
+
+    </div>
+
+
+    <!-- SISTER -->
+    <div class="character sister" id="sister-character">
+
+      <div class="speech-bubble sister-bubble" id="sister-bubble">
+        Choose wisely, bro 😏
+      </div>
+
+      <img
+        src="images/sister.png"
+        class="character-image"
+        id="sister-image"
+        alt="Sister"
+      />
+
+      <div class="character-label">
+        SISTER 👑
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- MAIN GAME -->
+
+  <main class="game-container">
+
+
+    <!-- =====================
+         START SCREEN
+    ====================== -->
+
+    <section id="start-screen" class="screen active">
 
       <div class="game-card welcome-card">
 
         <div class="rakhi-icon">🎀</div>
 
-        <p class="small-title">WELCOME TO</p>
+        <p class="small-title">
+          WELCOME TO
+        </p>
 
         <h1>
           BROTHER<br>
@@ -82,38 +122,32 @@
     </section>
 
 
-    <!-- LEVEL 1 -->
+
+    <!-- =====================
+         LEVEL 1
+    ====================== -->
+
     <section id="level1" class="screen">
-
-      <div class="character-stage level1-characters">
-
-        <div class="character brother">
-          <div class="character-action">🤔</div>
-          <div class="avatar">👦</div>
-          <span class="character-name">Thinking...</span>
-        </div>
-
-        <div class="character sister">
-          <div class="character-action">👑</div>
-          <div class="avatar">👧</div>
-          <span class="character-name">Obviously Me!</span>
-        </div>
-
-      </div>
-
 
       <div class="game-card">
 
-        <div class="level-badge">LEVEL 1 🧠</div>
+        <div class="level-badge">
+          LEVEL 1 🧠
+        </div>
 
-        <h2>How Well Do You Know Your Sister? 😏</h2>
+        <h2>
+          How Well Do You Know Your Sister? 😏
+        </h2>
 
         <p class="level-description">
           Answer correctly... or face disappointment 😂
         </p>
 
         <div class="progress">
-          <div class="progress-fill" id="progress-fill"></div>
+          <div
+            class="progress-fill"
+            id="progress-fill">
+          </div>
         </div>
 
         <div id="question-container">
@@ -122,61 +156,70 @@
             Who is always right?
           </h3>
 
-          <div id="answers" class="answer-grid"></div>
+          <div
+            id="answers"
+            class="answer-grid">
+          </div>
 
         </div>
 
-        <div id="funny-message" class="funny-message"></div>
+        <div
+          id="funny-message"
+          class="funny-message">
+        </div>
 
       </div>
 
     </section>
 
 
-    <!-- LEVEL 2 -->
+
+    <!-- =====================
+         LEVEL 2
+    ====================== -->
+
     <section id="level2" class="screen">
-
-      <div class="character-stage level2-characters">
-
-        <div class="character brother">
-          <div class="character-action">🏃</div>
-          <div class="avatar">👦</div>
-          <span class="character-name">Catch it!</span>
-        </div>
-
-        <div class="character sister">
-          <div class="character-action">😂</div>
-          <div class="avatar">👧</div>
-          <span class="character-name">Too Slow!</span>
-        </div>
-
-      </div>
-
 
       <div class="game-card catch-game">
 
-        <div class="level-badge">LEVEL 2 🏃</div>
+        <div class="level-badge">
+          LEVEL 2 🏃
+        </div>
 
-        <h2>Catch The Rakhi! 🎀</h2>
+        <h2>
+          Catch The Rakhi! 🎀
+        </h2>
 
         <p class="level-description">
           Catch it 5 times... if you can 😂
         </p>
 
         <div class="score-box">
-          Caught: <span id="rakhi-score">0</span> / 5
+
+          Caught:
+          <span id="rakhi-score">0</span>
+          / 5
+
         </div>
 
         <div id="rakhi-area">
 
-          <button id="rakhi" onclick="catchRakhi()">
+          <button
+            id="rakhi"
+            onclick="catchRakhi()">
+
             🎀
+
           </button>
 
         </div>
 
-        <p id="rakhi-message" class="funny-message">
+        <p
+          id="rakhi-message"
+          class="funny-message">
+
           It looks innocent... but it is fast 😈
+
         </p>
 
       </div>
@@ -184,31 +227,22 @@
     </section>
 
 
-    <!-- LEVEL 3 -->
+
+    <!-- =====================
+         LEVEL 3
+    ====================== -->
+
     <section id="level3" class="screen">
-
-      <div class="character-stage level3-characters">
-
-        <div class="character brother">
-          <div class="character-action">🏃‍♂️</div>
-          <div class="avatar">👦</div>
-          <span class="character-name">Give me that!</span>
-        </div>
-
-        <div class="character sister">
-          <div class="character-action">😈</div>
-          <div class="avatar">👧</div>
-          <span class="character-name">Try again!</span>
-        </div>
-
-      </div>
-
 
       <div class="game-card">
 
-        <div class="level-badge">LEVEL 3 😈</div>
+        <div class="level-badge">
+          LEVEL 3 😈
+        </div>
 
-        <h2>Don't Click The Wrong Button!</h2>
+        <h2>
+          Don't Click The Wrong Button!
+        </h2>
 
         <p class="level-description">
           One button contains your reward. The other... well 😂
@@ -216,18 +250,30 @@
 
         <div class="button-game">
 
-          <button id="gift-button" class="gift-btn">
+          <button
+            id="gift-button"
+            class="gift-btn">
+
             🎁 CLAIM YOUR GIFT
+
           </button>
 
-          <button id="wrong-button" class="wrong-btn">
+          <button
+            id="wrong-button"
+            class="wrong-btn">
+
             💀 NOTHING HERE
+
           </button>
 
         </div>
 
-        <p id="button-message" class="funny-message">
+        <p
+          id="button-message"
+          class="funny-message">
+
           Choose wisely, brother 😏
+
         </p>
 
       </div>
@@ -235,31 +281,22 @@
     </section>
 
 
-    <!-- LEVEL 4 -->
+
+    <!-- =====================
+         LEVEL 4
+    ====================== -->
+
     <section id="level4" class="screen">
-
-      <div class="character-stage level4-characters">
-
-        <div class="character brother">
-          <div class="character-action">🛡️💸</div>
-          <div class="avatar">👦</div>
-          <span class="character-name">My Money!</span>
-        </div>
-
-        <div class="character sister">
-          <div class="character-action">💰</div>
-          <div class="avatar">👧</div>
-          <span class="character-name">Waiting...</span>
-        </div>
-
-      </div>
-
 
       <div class="game-card">
 
-        <div class="level-badge">LEVEL 4 💸</div>
+        <div class="level-badge">
+          LEVEL 4 💸
+        </div>
 
-        <h2>Sister's Money Calculator 💰</h2>
+        <h2>
+          Sister's Money Calculator 💰
+        </h2>
 
         <p class="level-description">
           How much money are you planning to give your amazing sister?
@@ -271,42 +308,40 @@
           placeholder="Enter amount ₹"
         />
 
-        <button class="main-btn small-btn" onclick="checkMoney()">
+        <button
+          class="main-btn small-btn"
+          onclick="checkMoney()">
+
           CHECK AMOUNT 💸
+
         </button>
 
-        <div id="money-result" class="money-result"></div>
+        <div
+          id="money-result"
+          class="money-result">
+        </div>
 
       </div>
 
     </section>
 
 
-    <!-- LEVEL 5 -->
+
+    <!-- =====================
+         LEVEL 5
+    ====================== -->
+
     <section id="level5" class="screen">
-
-      <div class="character-stage level5-characters">
-
-        <div class="character brother">
-          <div class="character-action">🤔🎁</div>
-          <div class="avatar">👦</div>
-          <span class="character-name">Which one?!</span>
-        </div>
-
-        <div class="character sister">
-          <div class="character-action">👀</div>
-          <div class="avatar">👧</div>
-          <span class="character-name">Choose wisely...</span>
-        </div>
-
-      </div>
-
 
       <div class="game-card">
 
-        <div class="level-badge">FINAL LEVEL 🎁</div>
+        <div class="level-badge">
+          FINAL LEVEL 🎁
+        </div>
 
-        <h2>The Ultimate Gift Challenge!</h2>
+        <h2>
+          The Ultimate Gift Challenge!
+        </h2>
 
         <p class="level-description">
           Choose the correct gift for your sister 😌
@@ -314,40 +349,73 @@
 
         <div class="gift-grid">
 
-          <button class="gift-card" onclick="wrongGift('🧸')">
+          <button
+            class="gift-card"
+            onclick="wrongGift('🧸')">
+
             <span>🧸</span>
             Teddy
+
           </button>
 
-          <button class="gift-card" onclick="wrongGift('🍫')">
+
+          <button
+            class="gift-card"
+            onclick="wrongGift('🍫')">
+
             <span>🍫</span>
             Chocolate
+
           </button>
 
-          <button class="gift-card" onclick="wrongGift('🧦')">
+
+          <button
+            class="gift-card"
+            onclick="wrongGift('🧦')">
+
             <span>🧦</span>
             Socks
+
           </button>
 
-          <button class="gift-card" onclick="wrongGift('🪨')">
+
+          <button
+            class="gift-card"
+            onclick="wrongGift('🪨')">
+
             <span>🪨</span>
             A Stone
+
           </button>
 
-          <button class="gift-card money-gift" onclick="correctGift()">
+
+          <button
+            class="gift-card money-gift"
+            onclick="correctGift()">
+
             <span>💰</span>
             Money
+
           </button>
 
-          <button class="gift-card" onclick="wrongGift('🎁')">
+
+          <button
+            class="gift-card"
+            onclick="wrongGift('🎁')">
+
             <span>🎁</span>
             Mystery Gift
+
           </button>
 
         </div>
 
-        <p id="gift-message" class="funny-message">
+        <p
+          id="gift-message"
+          class="funny-message">
+
           Think carefully... your future depends on this 😂
+
         </p>
 
       </div>
@@ -355,31 +423,24 @@
     </section>
 
 
-    <!-- FINAL SCREEN -->
-    <section id="final-screen" class="screen">
 
-      <div class="character-stage final-characters">
+    <!-- =====================
+         FINAL SCREEN
+    ====================== -->
 
-        <div class="character brother">
-          <div class="character-action">🎉🙌</div>
-          <div class="avatar">👦</div>
-          <span class="character-name">WE DID IT!</span>
-        </div>
-
-        <div class="character sister">
-          <div class="character-action">🎉❤️</div>
-          <div class="avatar">👧</div>
-          <span class="character-name">Best Brother!</span>
-        </div>
-
-      </div>
-
+    <section
+      id="final-screen"
+      class="screen">
 
       <div class="game-card final-card">
 
-        <div class="trophy">🏆</div>
+        <div class="trophy">
+          🏆
+        </div>
 
-        <h1>YOU DID IT! 🎉</h1>
+        <h1>
+          YOU DID IT! 🎉
+        </h1>
 
         <p class="subtitle">
           Congratulations Brother!
@@ -387,7 +448,9 @@
 
         <div class="achievement">
 
-          <p>ACHIEVEMENT UNLOCKED 🔓</p>
+          <p>
+            ACHIEVEMENT UNLOCKED 🔓
+          </p>
 
           <h2>
             🏆 BEST BROTHER 🏆
@@ -400,19 +463,33 @@
         </div>
 
         <p class="final-message">
+
           ❤️ Congratulations! You survived all 5 levels.
+
           <br><br>
-          Your reward is having the <b>BEST SISTER IN THE WORLD!</b> 😌
+
+          Your reward is having the
+          <b>BEST SISTER IN THE WORLD!</b> 😌
+
           <br><br>
+
           P.S. Your actual reward is still pending...
           please check your wallet. 💸😂
+
         </p>
 
-        <button class="main-btn" onclick="finalPromise()">
+        <button
+          class="main-btn"
+          onclick="finalPromise()">
+
           🎁 I PROMISE TO GIVE A NICE GIFT
+
         </button>
 
-        <p id="promise-message" class="funny-message"></p>
+        <p
+          id="promise-message"
+          class="funny-message">
+        </p>
 
       </div>
 
@@ -421,14 +498,21 @@
   </main>
 
 
-  <!-- Confetti container -->
+  <!-- CONFETTI -->
+
   <div id="confetti-container"></div>
 
-  <!-- Popup -->
-  <div id="popup" class="popup"></div>
+
+  <!-- POPUP -->
+
+  <div
+    id="popup"
+    class="popup">
+  </div>
 
 
   <script src="script.js"></script>
 
 </body>
+
 </html>
