@@ -31,26 +31,21 @@ body {
 
 
 /* =========================================
-   FLOATING BACKGROUND EMOJIS
+   FLOATING BACKGROUND
 ========================================= */
 
 .emoji-background {
   position: fixed;
   inset: 0;
-
   pointer-events: none;
   overflow: hidden;
-
-  z-index: -1;
+  z-index: 0;
 }
 
 .emoji-background span {
   position: absolute;
-
   font-size: 2rem;
-
   opacity: 0.22;
-
   animation: floatEmoji 8s ease-in-out infinite;
 }
 
@@ -114,42 +109,35 @@ body {
 }
 
 @keyframes floatEmoji {
-
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0) rotate(0deg);
   }
 
   50% {
     transform: translateY(-35px) rotate(12deg);
   }
-
 }
 
 
 /* =========================================
-   MAIN GAME
+   GAME
 ========================================= */
 
 .game-container {
   width: 100%;
   min-height: 100vh;
+  position: relative;
+  z-index: 5;
 }
 
 .screen {
   display: none;
-
   position: relative;
-
   min-height: 100vh;
-
   padding: 40px 20px;
-
   align-items: center;
   justify-content: center;
-
   animation: screenAppear 0.6s ease;
-
   overflow: hidden;
 }
 
@@ -158,7 +146,6 @@ body {
 }
 
 @keyframes screenAppear {
-
   from {
     opacity: 0;
     transform: translateY(25px) scale(0.98);
@@ -168,36 +155,25 @@ body {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
-
 }
 
 
 /* =========================================
-   BROTHER + SISTER CHARACTERS
+   CHARACTERS
 ========================================= */
 
 .character-stage {
-  position: absolute;
-
+  position: fixed;
   inset: 0;
-
   width: 100%;
-
   pointer-events: none;
-
-  overflow: hidden;
-
-  z-index: 1;
+  overflow: visible;
+  z-index: 20;
 }
-
-
-/* Character wrapper */
 
 .character {
   position: absolute;
-
-  bottom: 25px;
-
+  bottom: 15px;
   width: 230px;
 
   display: flex;
@@ -215,54 +191,22 @@ body {
   transition:
     transform 0.35s ease,
     filter 0.35s ease;
-
-  /*
-    IMPORTANT:
-    Default idle animation.
-    Reaction classes below override this.
-  */
-
-  animation:
-    characterIdle 3s ease-in-out infinite;
 }
-
-
-/* =========================================
-   CHARACTER IMAGE
-========================================= */
 
 .character img {
   width: 100%;
-
   height: auto;
-
   display: block;
-
   user-select: none;
 
-  /*
-    Smooth image reaction change
-  */
-
   transition:
-    transform 0.25s ease,
-    filter 0.25s ease,
-    opacity 0.2s ease;
+    opacity 0.15s ease,
+    transform 0.25s ease;
 }
-
-
-/* =========================================
-   BROTHER POSITION
-========================================= */
 
 .character.brother {
   left: max(2%, calc(50% - 620px));
 }
-
-
-/* =========================================
-   SISTER POSITION
-========================================= */
 
 .character.sister {
   right: max(2%, calc(50% - 620px));
@@ -270,24 +214,57 @@ body {
 
 
 /* =========================================
-   CHARACTER IDLE
+   SPEECH BUBBLE
 ========================================= */
 
-@keyframes characterIdle {
+.speech-bubble {
+  position: relative;
 
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(0deg);
-  }
+  margin-bottom: 10px;
 
-  50% {
-    transform:
-      translateY(-10px)
-      rotate(1deg);
-  }
+  padding: 12px 18px;
 
+  max-width: 230px;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.96);
+
+  box-shadow:
+    0 8px 25px
+    rgba(80, 50, 100, 0.16);
+
+  color: #6b4d78;
+
+  font-size: 0.95rem;
+
+  font-weight: 800;
+
+  text-align: center;
+
+  z-index: 5;
+
+  transition:
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.speech-bubble::after {
+  content: "";
+
+  position: absolute;
+
+  bottom: -8px;
+  left: 50%;
+
+  width: 16px;
+  height: 16px;
+
+  background: white;
+
+  transform:
+    translateX(-50%)
+    rotate(45deg);
 }
 
 
@@ -296,14 +273,13 @@ body {
 ========================================= */
 
 .character-label {
-  margin-top: -10px;
+  margin-top: -5px;
 
-  padding: 5px 14px;
+  padding: 7px 15px;
 
   border-radius: 30px;
 
-  background:
-    rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.92);
 
   box-shadow:
     0 5px 15px
@@ -322,326 +298,97 @@ body {
 
 
 /* =========================================
-   SPEECH BUBBLE
+   DEFAULT CHARACTER IDLE
 ========================================= */
 
-.speech-bubble {
-  position: absolute;
-
-  bottom: calc(100% + 15px);
-
-  left: 50%;
-
-  transform:
-    translateX(-50%);
-
-  min-width: 180px;
-
-  max-width: 240px;
-
-  padding: 10px 15px;
-
-  border-radius: 18px;
-
-  background: rgba(255, 255, 255, 0.96);
-
-  box-shadow:
-    0 8px 25px
-    rgba(90, 60, 100, 0.15);
-
-  font-size: 0.9rem;
-
-  font-weight: 800;
-
-  color: #6b4d78;
-
-  text-align: center;
-
-  z-index: 20;
-
-  transition:
-    transform 0.25s ease,
-    opacity 0.25s ease;
-}
-
-
-/* Bubble tail */
-
-.speech-bubble::after {
-
-  content: "";
-
-  position: absolute;
-
-  bottom: -8px;
-
-  left: 50%;
-
-  width: 16px;
-
-  height: 16px;
-
-  background: white;
-
-  transform:
-    translateX(-50%)
-    rotate(45deg);
-
-  z-index: -1;
-}
-
-
-/* =========================================
-   NORMAL STATES
-========================================= */
-
-.character.brother.normal {
+.character {
   animation:
     characterIdle 3s ease-in-out infinite;
 }
 
-.character.sister.normal {
-  animation:
-    characterIdle 3.2s ease-in-out infinite;
-}
-
-
-/* =========================================
-   BROTHER THINKING 🤔
-========================================= */
-
-.character.brother.thinking {
-  animation:
-    thinkingBrother 1.5s ease-in-out infinite !important;
-}
-
-
-.character.brother.thinking img {
-
-  filter:
-    drop-shadow(
-      0 8px 12px
-      rgba(100, 70, 150, 0.15)
-    );
-}
-
-
-@keyframes thinkingBrother {
-
-  0%,
-  100% {
+@keyframes characterIdle {
+  0%, 100% {
     transform:
       translateY(0)
-      rotate(-3deg);
-  }
-
-  25% {
-    transform:
-      translateY(-5px)
-      rotate(2deg);
-  }
-
-  50% {
-    transform:
-      translateY(-12px)
-      rotate(4deg);
-  }
-
-  75% {
-    transform:
-      translateY(-5px)
-      rotate(1deg);
-  }
-
-}
-
-
-/* =========================================
-   SISTER JUDGING 👀
-========================================= */
-
-.character.sister.judging {
-  animation:
-    judgingSister 1.7s ease-in-out infinite !important;
-}
-
-
-@keyframes judgingSister {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(3deg);
-  }
-
-  30% {
-    transform:
-      translateY(-5px)
-      rotate(-3deg);
+      rotate(0deg);
   }
 
   50% {
     transform:
       translateY(-10px)
-      rotate(-5deg);
+      rotate(1deg);
   }
-
-  70% {
-    transform:
-      translateY(-5px)
-      rotate(-2deg);
-  }
-
 }
 
 
 /* =========================================
-   BROTHER SCARED 😨
+   LIVE REACTIONS
 ========================================= */
+
+/* BROTHER SCARED */
 
 .character.brother.scared {
-
   animation:
-    scaredBrother 0.25s ease-in-out infinite !important;
-
-  filter:
-    drop-shadow(
-      0 15px 20px
-      rgba(70, 40, 100, 0.18)
-    );
+    brotherScared 0.18s ease-in-out infinite !important;
 }
 
-
-.character.brother.scared img {
-
-  transform:
-    scale(1.04);
-}
-
-
-@keyframes scaredBrother {
-
-  0% {
+@keyframes brotherScared {
+  0%, 100% {
     transform:
       translateX(0)
-      translateY(0)
-      rotate(0deg);
+      rotate(0deg)
+      scale(1);
   }
 
-  20% {
-    transform:
-      translateX(-9px)
-      translateY(2px)
-      rotate(-4deg);
-  }
-
-  40% {
-    transform:
-      translateX(9px)
-      translateY(-2px)
-      rotate(4deg);
-  }
-
-  60% {
-    transform:
-      translateX(-7px)
-      translateY(2px)
-      rotate(-3deg);
-  }
-
-  80% {
-    transform:
-      translateX(7px)
-      translateY(0)
-      rotate(3deg);
-  }
-
-  100% {
-    transform:
-      translateX(0)
-      translateY(0)
-      rotate(0deg);
-  }
-
-}
-
-
-/* =========================================
-   SISTER ANGRY 😡
-========================================= */
-
-.character.sister.angry {
-
-  animation:
-    angrySister 0.28s ease-in-out infinite !important;
-
-  filter:
-    drop-shadow(
-      0 15px 22px
-      rgba(150, 50, 80, 0.25)
-    );
-}
-
-
-.character.sister.angry img {
-
-  transform:
-    scale(1.05);
-}
-
-
-@keyframes angrySister {
-
-  0%,
-  100% {
-    transform:
-      translateX(0)
-      rotate(0deg);
-  }
-
-  20% {
-    transform:
-      translateX(-10px)
-      rotate(-5deg);
-  }
-
-  40% {
-    transform:
-      translateX(10px)
-      rotate(5deg);
-  }
-
-  60% {
+  25% {
     transform:
       translateX(-8px)
-      rotate(-4deg);
+      rotate(-3deg)
+      scale(1.02);
   }
 
-  80% {
+  75% {
     transform:
       translateX(8px)
-      rotate(4deg);
+      rotate(3deg)
+      scale(1.02);
+  }
+}
+
+
+/* BROTHER HAPPY */
+
+.character.brother.happy {
+  animation:
+    brotherHappy 0.5s ease-in-out infinite !important;
+}
+
+@keyframes brotherHappy {
+  0%, 100% {
+    transform:
+      translateY(0)
+      rotate(-5deg)
+      scale(1);
   }
 
+  50% {
+    transform:
+      translateY(-18px)
+      rotate(5deg)
+      scale(1.04);
+  }
 }
 
 
-/* =========================================
-   BROTHER CRYING 😭
-========================================= */
+/* BROTHER SAD */
 
-.character.brother.crying {
-
+.character.brother.sad {
   animation:
-    cryingBrother 0.9s ease-in-out infinite !important;
+    brotherSad 1s ease-in-out infinite !important;
 }
 
-
-@keyframes cryingBrother {
-
-  0%,
-  100% {
+@keyframes brotherSad {
+  0%, 100% {
     transform:
       translateY(5px)
       rotate(3deg);
@@ -649,159 +396,88 @@ body {
 
   50% {
     transform:
-      translateY(18px)
+      translateY(15px)
       rotate(-3deg);
   }
-
 }
 
 
-/* =========================================
-   BROTHER RUNNING 🏃
-========================================= */
+/* BROTHER RUNNING */
 
 .character.brother.running {
-
   animation:
-    runningBrother 0.5s ease-in-out infinite !important;
+    brotherRunning 0.35s ease-in-out infinite !important;
+}
+
+@keyframes brotherRunning {
+  0%, 100% {
+    transform:
+      translateX(-5px)
+      rotate(-5deg);
+  }
+
+  50% {
+    transform:
+      translateX(10px)
+      translateY(-7px)
+      rotate(5deg);
+  }
 }
 
 
-@keyframes runningBrother {
+/* BROTHER THINKING */
 
-  0%,
-  100% {
+.character.brother.thinking {
+  animation:
+    brotherThinking 1.5s ease-in-out infinite !important;
+}
+
+@keyframes brotherThinking {
+  0%, 100% {
     transform:
-      translateX(0)
+      translateY(0)
+      rotate(-2deg);
+  }
+
+  50% {
+    transform:
+      translateY(-7px)
+      rotate(3deg);
+  }
+}
+
+
+/* SISTER HAPPY */
+
+.character.sister.happy {
+  animation:
+    sisterHappy 0.5s ease-in-out infinite !important;
+}
+
+@keyframes sisterHappy {
+  0%, 100% {
+    transform:
       translateY(0)
       rotate(-5deg);
   }
 
-  25% {
-    transform:
-      translateX(8px)
-      translateY(-5px)
-      rotate(4deg);
-  }
-
   50% {
     transform:
-      translateX(18px)
-      translateY(-10px)
-      rotate(6deg);
+      translateY(-18px)
+      rotate(5deg);
   }
-
-  75% {
-    transform:
-      translateX(8px)
-      translateY(-5px)
-      rotate(-2deg);
-  }
-
 }
 
 
-/* =========================================
-   BROTHER HAPPY 😎
-========================================= */
+/* SISTER ANGRY */
 
-.character.brother.happy {
-
+.character.sister.angry {
   animation:
-    happyBrother 0.65s ease-in-out infinite !important;
-
-  filter:
-    drop-shadow(
-      0 15px 25px
-      rgba(255, 180, 70, 0.2)
-    );
+    sisterAngry 0.16s ease-in-out infinite !important;
 }
 
-
-@keyframes happyBrother {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(6deg)
-      scale(1);
-  }
-
-  50% {
-    transform:
-      translateY(-22px)
-      rotate(-6deg)
-      scale(1.04);
-  }
-
-}
-
-
-/* =========================================
-   SISTER HAPPY ❤️
-========================================= */
-
-.character.sister.happy {
-
-  animation:
-    happySister 0.7s ease-in-out infinite !important;
-
-  filter:
-    drop-shadow(
-      0 15px 25px
-      rgba(255, 130, 170, 0.22)
-    );
-}
-
-
-@keyframes happySister {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(-6deg)
-      scale(1);
-  }
-
-  50% {
-    transform:
-      translateY(-22px)
-      rotate(6deg)
-      scale(1.04);
-  }
-
-}
-
-
-/* =========================================
-   SISTER ATTACK 😈
-========================================= */
-
-.character.sister.attack {
-
-  animation:
-    attackSister 0.3s ease-in-out infinite !important;
-
-  filter:
-    drop-shadow(
-      0 15px 25px
-      rgba(180, 40, 80, 0.28)
-    );
-}
-
-
-.character.sister.attack img {
-
-  transform:
-    scale(1.08);
-}
-
-
-@keyframes attackSister {
-
-  0% {
+@keyframes sisterAngry {
+  0%, 100% {
     transform:
       translateX(0)
       rotate(0deg)
@@ -809,117 +485,64 @@ body {
   }
 
   25% {
-    transform:
-      translateX(-12px)
-      rotate(-7deg)
-      scale(1.02);
-  }
-
-  50% {
-    transform:
-      translateX(14px)
-      rotate(7deg)
-      scale(1.06);
-  }
-
-  75% {
     transform:
       translateX(-10px)
-      rotate(-5deg)
-      scale(1.02);
+      rotate(-4deg)
+      scale(1.03);
   }
 
-  100% {
+  75% {
+    transform:
+      translateX(10px)
+      rotate(4deg)
+      scale(1.03);
+  }
+}
+
+
+/* SISTER JUDGING */
+
+.character.sister.judging {
+  animation:
+    sisterJudging 1.2s ease-in-out infinite !important;
+}
+
+@keyframes sisterJudging {
+  0%, 100% {
+    transform:
+      translateY(0)
+      rotate(3deg);
+  }
+
+  50% {
+    transform:
+      translateY(-7px)
+      rotate(-4deg);
+  }
+}
+
+
+/* SISTER ATTACK */
+
+.character.sister.attack {
+  animation:
+    sisterAttack 0.3s ease-in-out infinite !important;
+}
+
+@keyframes sisterAttack {
+  0%, 100% {
     transform:
       translateX(0)
-      rotate(0deg)
+      rotate(-5deg)
       scale(1);
   }
 
-}
-
-
-/* =========================================
-   CHARACTER REACTION POP
-========================================= */
-
-.character.reaction-pop img {
-
-  animation:
-    reactionPop 0.4s ease;
-}
-
-
-@keyframes reactionPop {
-
-  0% {
-    transform:
-      scale(0.9);
-  }
-
   50% {
     transform:
-      scale(1.12);
+      translateX(-15px)
+      rotate(7deg)
+      scale(1.07);
   }
-
-  100% {
-    transform:
-      scale(1);
-  }
-
-}
-
-
-/* =========================================
-   HOME CHARACTER ANIMATION
-========================================= */
-
-.home-characters .brother {
-
-  animation:
-    brotherWave 2.2s ease-in-out infinite;
-}
-
-.home-characters .sister {
-
-  animation:
-    sisterWave 2.5s ease-in-out infinite;
-}
-
-
-@keyframes brotherWave {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(-3deg);
-  }
-
-  50% {
-    transform:
-      translateY(-15px)
-      rotate(3deg);
-  }
-
-}
-
-
-@keyframes sisterWave {
-
-  0%,
-  100% {
-    transform:
-      translateY(0)
-      rotate(3deg);
-  }
-
-  50% {
-    transform:
-      translateY(-14px)
-      rotate(-3deg);
-  }
-
 }
 
 
@@ -929,7 +552,6 @@ body {
 
 .game-card {
   position: relative;
-
   z-index: 10;
 
   width: 100%;
@@ -940,10 +562,9 @@ body {
   text-align: center;
 
   background:
-    rgba(255, 255, 255, 0.82);
+    rgba(255, 255, 255, 0.86);
 
-  backdrop-filter:
-    blur(14px);
+  backdrop-filter: blur(14px);
 
   border:
     2px solid
@@ -960,37 +581,8 @@ body {
     inset;
 }
 
-
 .welcome-card {
   max-width: 650px;
-}
-
-
-/* =========================================
-   HOME RAKHI ICON
-========================================= */
-
-.rakhi-icon {
-  font-size: 5rem;
-
-  animation:
-    bounce 2s infinite;
-}
-
-
-@keyframes bounce {
-
-  0%,
-  100% {
-    transform:
-      translateY(0);
-  }
-
-  50% {
-    transform:
-      translateY(-12px);
-  }
-
 }
 
 
@@ -998,33 +590,40 @@ body {
    TEXT
 ========================================= */
 
-.small-title {
-  font-weight: 800;
-
-  letter-spacing: 4px;
-
-  color: #9b6bba;
-
-  margin-bottom: 10px;
+.rakhi-icon {
+  font-size: 5rem;
+  animation: bounce 2s infinite;
 }
 
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.small-title {
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: #9b6bba;
+  margin-bottom: 10px;
+}
 
 h1 {
   font-size:
     clamp(2.5rem, 7vw, 4.5rem);
 
   font-weight: 900;
-
   line-height: 0.95;
-
   color: #5a3d7a;
 }
-
 
 h1 span {
   color: #e86a92;
 }
-
 
 h2 {
   font-size:
@@ -1035,36 +634,29 @@ h2 {
   color: #5a3d7a;
 }
 
-
 h3 {
   margin: 25px 0;
-
   font-size: 1.5rem;
 }
-
 
 .subtitle {
   margin: 20px 0;
 
   font-size: 1.2rem;
-
   font-weight: 700;
 
   color: #e86a92;
 }
 
-
 .level-description {
   margin-bottom: 25px;
-
   color: #756687;
-
   font-weight: 600;
 }
 
 
 /* =========================================
-   LEVEL BADGE
+   BADGE
 ========================================= */
 
 .level-badge {
@@ -1095,12 +687,13 @@ h3 {
 
 button {
   font-family: inherit;
-
   border: none;
-
   cursor: pointer;
-
   transition: 0.25s ease;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }
 
 
@@ -1130,30 +723,17 @@ button {
     rgba(201, 93, 133, 0.25);
 }
 
-
 .main-btn:hover {
-
   transform:
     translateY(-4px)
     scale(1.03);
-
-  box-shadow:
-    0 14px 0 #c95d85,
-    0 20px 30px
-    rgba(201, 93, 133, 0.3);
 }
 
-
 .main-btn:active {
-
   transform:
     translateY(7px)
     scale(0.97);
-
-  box-shadow:
-    0 3px 0 #c95d85;
 }
-
 
 .small-btn {
   margin-left: 10px;
@@ -1161,11 +741,10 @@ button {
 
 
 /* =========================================
-   WARNING BOX
+   WARNING
 ========================================= */
 
 .warning-box {
-
   margin: 25px auto;
 
   padding: 16px 20px;
@@ -1188,7 +767,6 @@ button {
 ========================================= */
 
 .progress {
-
   width: 100%;
 
   height: 12px;
@@ -1202,11 +780,8 @@ button {
   margin: 25px 0;
 }
 
-
 .progress-fill {
-
   height: 100%;
-
   width: 0%;
 
   border-radius: 20px;
@@ -1222,17 +797,12 @@ button {
     width 0.4s ease;
 }
 
-
 .answer-grid {
-
   display: grid;
-
   gap: 12px;
 }
 
-
 .answer-grid button {
-
   padding: 16px 20px;
 
   border-radius: 15px;
@@ -1249,11 +819,8 @@ button {
   color: #5a4a6a;
 }
 
-
 .answer-grid button:hover {
-
-  transform:
-    translateY(-3px);
+  transform: translateY(-3px);
 
   border-color: #e981a8;
 
@@ -1262,44 +829,30 @@ button {
     rgba(233, 129, 168, 0.15);
 }
 
-
 .answer-grid button.correct {
-
   background: #dff8e8;
-
   border-color: #58bd78;
 }
 
-
 .answer-grid button.wrong {
-
   background: #ffe2e2;
-
   border-color: #ef7777;
 
-  animation:
-    shake 0.4s;
+  animation: shake 0.4s;
 }
 
-
 @keyframes shake {
-
-  0%,
-  100% {
-    transform:
-      translateX(0);
+  0%, 100% {
+    transform: translateX(0);
   }
 
   25% {
-    transform:
-      translateX(-8px);
+    transform: translateX(-8px);
   }
 
   75% {
-    transform:
-      translateX(8px);
+    transform: translateX(8px);
   }
-
 }
 
 
@@ -1308,7 +861,6 @@ button {
 ========================================= */
 
 .funny-message {
-
   min-height: 30px;
 
   margin-top: 22px;
@@ -1318,39 +870,14 @@ button {
   font-size: 1.05rem;
 
   color: #a26086;
-
-  animation:
-    messagePop 0.3s ease;
-}
-
-
-@keyframes messagePop {
-
-  from {
-
-    transform:
-      scale(0.8);
-
-    opacity: 0;
-  }
-
-  to {
-
-    transform:
-      scale(1);
-
-    opacity: 1;
-  }
-
 }
 
 
 /* =========================================
-   LEVEL 2 - CATCH RAKHI
+   LEVEL 2
 ========================================= */
 
 .score-box {
-
   display: inline-block;
 
   padding: 12px 22px;
@@ -1366,13 +893,10 @@ button {
   font-weight: 900;
 }
 
-
 #rakhi-area {
-
   position: relative;
 
   width: 100%;
-
   height: 350px;
 
   overflow: hidden;
@@ -1390,9 +914,7 @@ button {
     2px dashed #d9bdea;
 }
 
-
 #rakhi {
-
   position: absolute;
 
   left: 40%;
@@ -1415,41 +937,32 @@ button {
     rakhiPulse 1.5s infinite;
 }
 
-
 #rakhi:hover {
-
   transform:
     scale(1.15)
     rotate(10deg);
 }
 
-
 @keyframes rakhiPulse {
-
-  0%,
-  100% {
-
+  0%, 100% {
     box-shadow:
       0 0 0 0
       rgba(255, 130, 170, 0.35);
   }
 
   50% {
-
     box-shadow:
       0 0 0 15px
       rgba(255, 130, 170, 0);
   }
-
 }
 
 
 /* =========================================
-   LEVEL 3 BUTTON GAME
+   LEVEL 3
 ========================================= */
 
 .button-game {
-
   position: relative;
 
   min-height: 220px;
@@ -1465,10 +978,8 @@ button {
   flex-wrap: wrap;
 }
 
-
 .gift-btn,
 .wrong-btn {
-
   padding: 20px 25px;
 
   border-radius: 18px;
@@ -1478,28 +989,21 @@ button {
   font-size: 1rem;
 }
 
-
 .gift-btn {
-
   background: #c9f5d6;
-
   color: #38734b;
 
   box-shadow:
     0 7px 0 #74c68c;
 }
 
-
 .gift-btn:hover {
-
   transform:
     translateY(-4px)
     rotate(-2deg);
 }
 
-
 .wrong-btn {
-
   background: #ffe0e7;
 
   color: #a84f68;
@@ -1508,9 +1012,7 @@ button {
     0 7px 0 #e69aaa;
 }
 
-
 .wrong-btn:hover {
-
   transform:
     translateY(-4px)
     rotate(2deg);
@@ -1518,11 +1020,10 @@ button {
 
 
 /* =========================================
-   LEVEL 4 MONEY
+   LEVEL 4
 ========================================= */
 
 #money-input {
-
   width:
     min(100%, 300px);
 
@@ -1542,9 +1043,7 @@ button {
   text-align: center;
 }
 
-
 #money-input:focus {
-
   border-color: #b477dd;
 
   box-shadow:
@@ -1552,9 +1051,7 @@ button {
     rgba(180, 119, 221, 0.12);
 }
 
-
 .money-result {
-
   margin-top: 25px;
 
   font-size: 1.1rem;
@@ -1568,11 +1065,10 @@ button {
 
 
 /* =========================================
-   LEVEL 5 GIFTS
+   LEVEL 5
 ========================================= */
 
 .gift-grid {
-
   display: grid;
 
   grid-template-columns:
@@ -1583,9 +1079,7 @@ button {
   margin-top: 25px;
 }
 
-
 .gift-card {
-
   min-height: 130px;
 
   padding: 15px;
@@ -1616,39 +1110,27 @@ button {
     rgba(100, 70, 130, 0.08);
 }
 
-
 .gift-card span {
-
   font-size: 3rem;
 
   transition: 0.3s;
 }
 
-
 .gift-card:hover {
-
   transform:
     translateY(-7px)
     rotate(2deg);
 
   border-color: #e886b0;
-
-  box-shadow:
-    0 15px 30px
-    rgba(200, 100, 150, 0.18);
 }
 
-
 .gift-card:hover span {
-
   transform:
     scale(1.2)
     rotate(10deg);
 }
 
-
 .money-gift {
-
   background:
     linear-gradient(
       135deg,
@@ -1662,66 +1144,46 @@ button {
     moneyBounce 2s infinite;
 }
 
-
 @keyframes moneyBounce {
-
-  0%,
-  100% {
-
-    transform:
-      translateY(0);
+  0%, 100% {
+    transform: translateY(0);
   }
 
   50% {
-
-    transform:
-      translateY(-5px);
+    transform: translateY(-5px);
   }
-
 }
 
 
 /* =========================================
-   FINAL SCREEN
+   FINAL
 ========================================= */
 
 .final-card {
-
   border:
     3px solid #f4c65c;
 }
 
-
 .trophy {
-
   font-size: 6rem;
 
   animation:
     trophyDance 1.5s infinite;
 }
 
-
 @keyframes trophyDance {
-
-  0%,
-  100% {
-
-    transform:
-      rotate(-5deg);
+  0%, 100% {
+    transform: rotate(-5deg);
   }
 
   50% {
-
     transform:
       rotate(5deg)
       scale(1.1);
   }
-
 }
 
-
 .achievement {
-
   margin: 25px 0;
 
   padding: 25px;
@@ -1739,25 +1201,17 @@ button {
     2px dashed #e6ae42;
 }
 
-
 .achievement p {
-
   font-weight: 800;
-
   color: #8c682c;
 }
 
-
 .achievement h2 {
-
   margin: 8px 0;
-
   color: #a36c13;
 }
 
-
 .final-message {
-
   line-height: 1.6;
 
   font-size: 1.05rem;
@@ -1771,11 +1225,7 @@ button {
 ========================================= */
 
 .confetti {
-
   position: fixed;
-
-  width: 12px;
-  height: 12px;
 
   top: -20px;
 
@@ -1785,16 +1235,12 @@ button {
     confettiFall 3s linear forwards;
 }
 
-
 @keyframes confettiFall {
-
   to {
-
     transform:
       translateY(110vh)
       rotate(720deg);
   }
-
 }
 
 
@@ -1803,7 +1249,6 @@ button {
 ========================================= */
 
 .popup {
-
   position: fixed;
 
   top: 30px;
@@ -1830,9 +1275,7 @@ button {
   transition: 0.4s ease;
 }
 
-
 .popup.show {
-
   transform:
     translateX(-50%)
     translateY(0);
@@ -1840,7 +1283,7 @@ button {
 
 
 /* =========================================
-   TABLET RESPONSIVE
+   RESPONSIVE
 ========================================= */
 
 @media (max-width: 1100px) {
@@ -1856,13 +1299,8 @@ button {
   .character.sister {
     right: 1%;
   }
-
 }
 
-
-/* =========================================
-   MOBILE
-========================================= */
 
 @media (max-width: 800px) {
 
@@ -1871,17 +1309,9 @@ button {
       130px 12px 30px;
   }
 
-  .character-stage {
-    height: 120px;
-
-    bottom: auto;
-  }
-
   .character {
     width: 110px;
-
     bottom: auto;
-
     top: 5px;
   }
 
@@ -1894,36 +1324,22 @@ button {
   }
 
   .speech-bubble {
-
-    bottom: calc(100% + 5px);
-
-    min-width: 120px;
-
-    max-width: 150px;
-
-    font-size: 0.68rem;
-
-    padding: 6px 8px;
+    font-size: 0.72rem;
+    padding: 7px 9px;
+    max-width: 125px;
   }
 
   .character-label {
-
     font-size: 0.65rem;
-
     padding: 3px 8px;
-
-    margin-top: -5px;
   }
 
   .game-card {
-
     padding: 30px 20px;
-
     border-radius: 24px;
   }
 
   .gift-grid {
-
     grid-template-columns:
       repeat(2, 1fr);
   }
@@ -1941,11 +1357,8 @@ button {
   }
 
   .small-btn {
-
     margin-left: 0;
-
     display: block;
-
     margin:
       15px auto 0;
   }
@@ -1953,13 +1366,8 @@ button {
   h1 {
     font-size: 2.7rem;
   }
-
 }
 
-
-/* =========================================
-   SMALL MOBILE
-========================================= */
 
 @media (max-width: 450px) {
 
@@ -1972,7 +1380,8 @@ button {
   }
 
   .speech-bubble {
-    display: none;
+    font-size: 0.65rem;
+    max-width: 105px;
   }
 
   .character-label {
@@ -1990,13 +1399,8 @@ button {
   h2 {
     font-size: 1.65rem;
   }
-
 }
 
-
-/* =========================================
-   VERY SMALL PHONES
-========================================= */
 
 @media (max-width: 350px) {
 
@@ -2004,31 +1408,11 @@ button {
     width: 75px;
   }
 
+  .speech-bubble {
+    display: none;
+  }
+
   .screen {
     padding-top: 95px;
   }
-
-}
-
-
-/* =========================================
-   ACCESSIBILITY / REDUCED MOTION
-========================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-  *,
-  *::before,
-  *::after {
-
-    animation-duration: 0.01ms !important;
-
-    animation-iteration-count: 1 !important;
-
-    scroll-behavior: auto !important;
-
-    transition-duration: 0.01ms !important;
-
-  }
-
 }
